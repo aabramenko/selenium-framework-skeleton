@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE log4j:configuration SYSTEM "http://logging.apache.org/log4j/1.2/apidocs/org/apache/log4j/xml/doc-files/log4j.dtd">
+
+<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
+    <appender name="testNgReporter" class="project.logger.TestNgReportAppender">
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%d{yyyy-MM-dd HH:mm:ss,SSS} %-5p #THREAD#: %m%n"/>
+        </layout>
+        <filter class="org.apache.log4j.varia.LevelRangeFilter">
+            <param name="LevelMax" value="FATAL" />
+            <param name="LevelMin" value="INFO" />
+            <param name="AcceptOnMatch" value="true" />
+        </filter>
+    </appender>
+    <appender name="console" class="project.logger.ConsoleAppender">
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%-5p#THREAD#: %m%n"/>
+        </layout>
+        <filter class="org.apache.log4j.varia.LevelRangeFilter">
+            <param name="LevelMax" value="FATAL" />
+            <param name="LevelMin" value="INFO" />
+            <param name="AcceptOnMatch" value="true" />
+        </filter>
+    </appender>
+    <appender name="file_full" class="project.logger.FileAppender">
+        <param name="File" value="target/test-run-artifacts/full.log" />
+        <param name="DatePattern" value="'.'yyyy-MM-dd'.log'" />
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern"
+                   value="%d{yyyy-MM-dd HH:mm:ss,SSS} %-5p%m (%M:%L)%n"/>
+        </layout>
+        <filter class="org.apache.log4j.varia.LevelRangeFilter">
+            <param name="LevelMax" value="FATAL" />
+            <param name="LevelMin" value="INFO" />
+            <param name="AcceptOnMatch" value="true" />
+        </filter>
+    </appender>
+    <appender name="file_error" class="project.logger.FileAppender">
+        <param name="File" value="target/test-run-artifacts/error.log" />
+        <param name="DatePattern" value="'.'yyyy-MM-dd'.log'" />
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern"
+                   value="%d{yyyy-MM-dd HH:mm:ss,SSS} %-5p%m (%M:%L)%n"/>
+        </layout>
+        <filter class="org.apache.log4j.varia.LevelRangeFilter">
+            <param name="LevelMax" value="FATAL" />
+            <param name="LevelMin" value="ERROR" />
+            <param name="AcceptOnMatch" value="true" />
+        </filter>
+    </appender>
+    <root>
+        <priority value="INFO"/>
+        <appender-ref ref="console"/>
+        <appender-ref ref="file_full"/>
+        <appender-ref ref="file_error"/>
+        <appender-ref ref="testNgReporter"/>
+    </root>
+</log4j:configuration>

@@ -1,0 +1,13 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="regression" parallel="tests" thread-count="2">
+    <groups>
+        <run>
+            <include name="regression" />
+        </run>
+    </groups>
+    <test name="Debug">
+        <classes>
+            <class name="project.cases.DebugTest" />
+        </classes>
+    </test>
+</suite>
