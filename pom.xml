@@ -14,7 +14,7 @@
         <webdrivermanager.version>3.6.1</webdrivermanager.version>
         <maven-surefire-plugin.version>2.22.2</maven-surefire-plugin.version>
         <!--Default values-->
-        <suite>regression.xml</suite>
+        <suite>example.xml</suite>
     </properties>
 
     <build>
@@ -140,13 +140,13 @@
         <dependency>
             <groupId>io.qameta.allure</groupId>
             <artifactId>allure-testng</artifactId>
-            <version>2.9.0</version>
+            <version>2.12.1</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>io.qameta.allure</groupId>
             <artifactId>allure-java-commons</artifactId>
-            <version>2.9.0</version>
+            <version>2.12.1</version>
             <scope>compile</scope>
         </dependency>
         <dependency>

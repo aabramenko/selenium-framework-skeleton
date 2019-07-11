@@ -7,10 +7,12 @@ import org.openqa.selenium.*;
 import org.testng.ITestResult;
 import org.testng.annotations.*;
 import org.testng.asserts.SoftAssert;
+import project.core.CredsManager;
 import project.core.RunTimeDataStorage;
 import project.core.ConfigManager;
-import project.driverFactory.DriverFactory;
 import project.core.Utils;
+import project.driverFactory.NewDriverFactory;
+import project.models.Driver;
 
 import static project.core.TestRunParams.*;
 import static project.core.Utils.*;
@@ -23,10 +25,10 @@ public abstract class AbstractTest {
 
     SoftAssert SoftAssert;
 
-    private WebDriver driver;
+    private Driver classDriver;
 
     public WebDriver getDriver() {
-        return driver;
+        return classDriver.getDriver();
     }
 
     @BeforeSuite(alwaysRun = true)
@@ -34,8 +36,8 @@ public abstract class AbstractTest {
         System.setProperty("org.uncommons.reportng.escape-output", "false");
 
         ConfigManager.uploadRunConfigValues();
-        ConfigManager.uploadEnvConfigValues(ConfigManager.getRunConfig());
-        ConfigManager.uploadCredsValues(ConfigManager.getRunConfig());
+        ConfigManager.uploadEnvConfigValues();
+        CredsManager.uploadCredsValues();
 
         deleteTempFiles();
         createFolder(getPathToAllArtifactsFolders());
@@ -43,7 +45,6 @@ public abstract class AbstractTest {
 
         RunTimeDataStorage.RunningTestStatistic.resetTestOrderNumber();
 
-        log.info("=== Start url: " + ConfigManager.getStartUrl());
         log.info("=== OS: " + Utils.getCurrentOS());
         log.info("=== Grid?: " + ConfigManager.isGrid());
         log.info("=== Selenoid?: " + ConfigManager.isSelenoid());
@@ -77,35 +78,24 @@ public abstract class AbstractTest {
         //
     }
 
-    public void openBrowser() {
-        DriverFactory.initiateDriver(ConfigManager.getBrowserName());
-        driver = DriverFactory.getDriver();
-
-        sleepMsec(2000);
-        if (("" + getDriver()).toLowerCase().contains("null")) {
-            sleepMsec(10000);
-        }
-
+    private void openBrowser() {
+        classDriver = NewDriverFactory.getNewDriverInstance(ConfigManager.getBrowserName());
         Utils.printDashedLine();
-        log.info("Browser: " + DriverFactory.getCurrentBrowserName() + " | thread: " + DriverFactory.getCurrentThreadId());
-        log.info("Driver: " + driver);
+        log.info("Browser: " + classDriver.getBrowserName() + " | thread: " + Utils.getCurrentThreadId());
+        log.info("Driver: " + classDriver.getDriver());
         Utils.printDashedLine();
-        driver.manage().window().setSize(new Dimension(1366, 768));
+        classDriver.getDriver().manage().window().setSize(new Dimension(1366, 768));
     }
 
-    public void closeBrowser() {
-        if (getDriver() != null) {
+    private void closeBrowser() {
+        if (classDriver.getDriver() != null) {
             log.info("closing browser");
             try {
-                DriverFactory.closeBrowser();
+                classDriver.getDriver().quit();
             }
             catch (WebDriverException e) {
-                DriverFactory.closeBrowser();
+                //
             }
         }
-    }
-
-    public void log(String text) {
-        log.info(text);
     }
 }

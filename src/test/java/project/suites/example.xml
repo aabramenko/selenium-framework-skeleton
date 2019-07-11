@@ -5,9 +5,14 @@
             <include name="regression" />
         </run>
     </groups>
-    <test name="Debug">
+    <test name="Validate Currency Rate">
         <classes>
-            <class name="project.cases.DebugTest" />
+            <class name="project.cases.ValidateCurrencyRateTest" />
+        </classes>
+    </test>
+    <test name="Wrong Credentials">
+        <classes>
+            <class name="project.cases.WrongCredsTest" />
         </classes>
     </test>
 </suite>

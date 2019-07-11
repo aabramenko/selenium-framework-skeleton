@@ -6,33 +6,22 @@ import org.apache.log4j.Logger;
 
 public class ConfigManager {
 
-    private final static String runConfigMainTag = "run_config";
-    private final static String envConfigMainTag = "env_config";
-    private final static String credsMainTag = "creds";
+    private final static String runConfigTag = Constants.RUN_CONFIG_FILE_MAIN_TAG;
+    private final static String envConfigTag = Constants.ENV_CONFIG_FILE_MAIN_TAG;
 
     private static Logger log = Logger.getLogger("");
 
     private static Config runConfig;
     private static Config envConfig;
-    private static Config creds;
 
     public static Config getRunConfig() {
         return runConfig;
     }
 
-    public static Config getEnvConfig() {
-        return envConfig;
-    }
-
-    public static Config getCreds() {
-        return creds;
-    }
-
     public static void uploadRunConfigValues() {
         log.info("uploading run config parameters");
-        String valFromSystem = System.getProperty("config");
-        String valDefault = "run_config_main";
-        String configFileName = valDefault;
+        String valFromSystem = System.getProperty("run_config");
+        String configFileName = "run_config_main";
         if (valFromSystem != null) {
             configFileName = valFromSystem;
         }
@@ -40,22 +29,19 @@ public class ConfigManager {
         runConfig = ConfigFactory.load(configFileName);
     }
 
-    public static void uploadEnvConfigValues(Config runConfig) {
+    public static void uploadEnvConfigValues() {
         log.info("uploading environment config parameters");
-        String envConfigFile = runConfig.getString(runConfigMainTag + ".env_config_file");
-        log.info("env config file is: " + envConfigFile);
-        envConfig = ConfigFactory.load(envConfigFile);
-    }
-
-    public static void uploadCredsValues(Config runConfig) {
-        log.info("uploading credentials");
-        String credFile = runConfig.getString(runConfigMainTag + ".cred_file");
-        log.info("creds file is: " + credFile);
-        creds = ConfigFactory.load(credFile);
+        String valFromSystem = System.getProperty("env_config");
+        String configFileName = "env_config_main";
+        if (valFromSystem != null) {
+            configFileName = valFromSystem;
+        }
+        log.info("env config file is: " + configFileName);
+        envConfig = ConfigFactory.load(configFileName);
     }
 
     public static String getPathToSampleFilesFolder() {
-        String path = System.getProperty("user.dir") + runConfig.getString(runConfigMainTag + ".path_to_sample_files");
+        String path = System.getProperty("user.dir") + runConfig.getString(runConfigTag + ".path_to_sample_files");
         if (Utils.getCurrentOS().contains("wind")) {
             path = path.replace("/", "\\");
         }
@@ -63,15 +49,11 @@ public class ConfigManager {
     }
 
     public static String getPathToTestFilesFolder() {
-        String path = System.getProperty("user.dir") + runConfig.getString(runConfigMainTag + ".path_to_temp_files");
+        String path = System.getProperty("user.dir") + runConfig.getString(runConfigTag + ".path_to_temp_files");
         if (Utils.getCurrentOS().contains("wind")) {
             path = path.replace("/", "\\");
         }
         return path;
-    }
-
-    public static String getStartUrl() {
-        return envConfig.getString(envConfigMainTag + ".start_url");
     }
 
     public static String getBrowserName() {
@@ -79,28 +61,28 @@ public class ConfigManager {
             return System.getProperty("browser");
         }
         else {
-            return envConfig.getString(envConfigMainTag + ".browser");
+            return envConfig.getString(envConfigTag + ".browser");
         }
     }
 
     public static int getWaitForPageUploadSec() {
-        return envConfig.getInt(envConfigMainTag + ".wait_for_page_upload_sec");
+        return envConfig.getInt(envConfigTag + ".wait_for_page_upload_sec");
     }
 
     public static String getGridHubUrl() {
-        return runConfig.getString(runConfigMainTag + ".grid_hub_url");
+        return runConfig.getString(runConfigTag + ".grid_hub_url");
     }
 
     public static String getGridHost() {
-        return runConfig.getString(runConfigMainTag + ".grid_host");
+        return runConfig.getString(runConfigTag + ".grid_host");
     }
 
     public static boolean isGrid() {
-        return Boolean.valueOf(runConfig.getString(runConfigMainTag + ".use_grid"));
+        return Boolean.valueOf(runConfig.getString(runConfigTag + ".use_grid"));
     }
 
     public static boolean isSelenoid() {
-        return Boolean.valueOf(runConfig.getString(runConfigMainTag + ".use_selenoid"));
+        return Boolean.valueOf(runConfig.getString(runConfigTag + ".use_selenoid"));
     }
 
     public static boolean isHeadless() {
@@ -108,23 +90,23 @@ public class ConfigManager {
             return Boolean.valueOf(System.getProperty("headless"));
         }
         else {
-            return Boolean.valueOf(runConfig.getString(runConfigMainTag + ".headless"));
+            return Boolean.valueOf(runConfig.getString(runConfigTag + ".headless"));
         }
     }
 
     public static boolean isScreenOnFailure() {
-        return Boolean.valueOf(runConfig.getString(runConfigMainTag + ".screenshot_on_test_failure"));
+        return Boolean.valueOf(runConfig.getString(runConfigTag + ".screenshot_on_test_failure"));
     }
 
     public static boolean isScreenOnSuccess() {
-        return Boolean.valueOf(runConfig.getString(runConfigMainTag + ".screenshot_on_test_success"));
+        return Boolean.valueOf(runConfig.getString(runConfigTag + ".screenshot_on_test_success"));
     }
 
     public static boolean isHtmlOnFailure() {
-        return Boolean.valueOf(runConfig.getString(runConfigMainTag + ".html_source_on_test_failure"));
+        return Boolean.valueOf(runConfig.getString(runConfigTag + ".html_source_on_test_failure"));
     }
 
     public static boolean isHtmlOnSuccess() {
-        return Boolean.valueOf(runConfig.getString(runConfigMainTag + ".html_source_on_test_success"));
+        return Boolean.valueOf(runConfig.getString(runConfigTag + ".html_source_on_test_success"));
     }
 }

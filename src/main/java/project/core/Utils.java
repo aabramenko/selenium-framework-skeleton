@@ -2,9 +2,7 @@ package project.core;
 
 import org.apache.log4j.Logger;
 import org.openqa.selenium.WebDriver;
-import project.core.ConfigManager;
-import project.core.Dictionary;
-import project.driverFactory.DriverFactory;
+import org.openqa.selenium.remote.RemoteWebDriver;
 import ru.yandex.qatools.ashot.AShot;
 import ru.yandex.qatools.ashot.Screenshot;
 import ru.yandex.qatools.ashot.shooting.ShootingStrategies;
@@ -347,12 +345,12 @@ public class Utils {
         return string.toString();
     }
 
-    public static void manageFileDownloading(String fileName) {
+    public static void manageFileDownloading(String fileName, RemoteWebDriver driver) {
         if (isSelenoid()) {
             log.info("downloading file from selenoid docker image");
             sleepMsec(5000);
             String gridFileUrl = ConfigManager.getGridHost() + "/download/" +
-                    DriverFactory.getRemoteSessionId() + "/" +
+                    driver.getSessionId() + "/" +
                     fileName;
             wgetFile(gridFileUrl);
         }
@@ -372,7 +370,7 @@ public class Utils {
 
     public static String removePackageNameFromPath(String str) {
         str = str.replace("project.cases.", "");
-        str = str.replace("project.pages.", "");
+        str = str.replace("project.pages.example.", "");
         return str;
     }
 
@@ -407,6 +405,10 @@ public class Utils {
     public static void printDashedLine() {
         String line = Utils.getStringOfCharacters("- ", 35);
         log.info(line);
+    }
+
+    public static long getCurrentThreadId() {
+        return Thread.currentThread().getId();
     }
 
 }

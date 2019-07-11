@@ -1,6 +1,6 @@
 package project.models;
 
-public class Users {
+public class User {
 
     private String username;
 
@@ -10,14 +10,18 @@ public class Users {
 
     private String lastName;
 
-    public Users(final String username,
-                 final String password,
-                 final String firstName,
-                 final String lastName) {
+    private String email;
+
+    public User(final String username,
+                final String password,
+                final String firstName,
+                final String lastName,
+                final String email) {
         this.username = username;
         this.password = password;
         this.firstName = firstName;
         this.lastName = lastName;
+        this.email = email;
     }
 
     public String getUsername() {
@@ -34,6 +38,10 @@ public class Users {
 
     public String getLastName() {
         return lastName;
+    }
+
+    public String getEmail() {
+        return email;
     }
 }
 
