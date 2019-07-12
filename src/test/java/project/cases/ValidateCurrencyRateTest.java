@@ -1,6 +1,8 @@
 package project.cases;
 
 import org.testng.Assert;
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import project.core.Dictionary;
 import project.data.TestData;
@@ -9,28 +11,38 @@ import project.pages.example.GoogleStartPage;
 import ru.yandex.qatools.htmlelements.annotations.Name;
 
 @Name("Validate currency rate")
-@Test(groups = {"regression"})
+@Test(groups = {"regression", "ui"})
 public class ValidateCurrencyRateTest extends CommonActionsTest {
 
     GoogleStartPage startPage;
     GoogleResultsPage resultsPage;
+
+    @BeforeClass(alwaysRun = true)
+    public void beforeClass() {
+        openBrowser();
+    }
+
+    @AfterClass(alwaysRun = true)
+    public void afterClass() {
+        closeBrowser();
+    }
 
     @Test
     public void tc_rate_01_open_google_start_page() {
 
         startPage = openGoogleStartPage();
 
-        SoftAssert.assertTrue(
+        softAssert.assertTrue(
                 startPage.isGoogleSearchButtonDisplayed(),
                 "'Google Search' button is displayed"
         );
 
-        SoftAssert.assertTrue(
+        softAssert.assertTrue(
                 startPage.isSearchLineDisplayed(),
                 "Search Line is displayed"
         );
 
-        SoftAssert.assertAll();
+        softAssert.assertAll();
     }
 
     @Test(dependsOnMethods = "tc_rate_01_open_google_start_page")
@@ -59,7 +71,6 @@ public class ValidateCurrencyRateTest extends CommonActionsTest {
                 TestData.CASE_02_EXPECTED_CURRENCY_TO.toUpperCase(),
                 "Name of currency 'To'"
         );
-
     }
 
     @Test(dependsOnMethods = "tc_rate_02_search_current_rate")

@@ -89,7 +89,7 @@ public class Logger {
 
     public static void printTestInfoHeader(ITestResult iTestResult) {
         Utils.printDoubleLine();
-        log.info("* test case [" + getCaseName(iTestResult) + "] started | # " + RunTimeDataStorage.RunningTestStatistic.getTestOrderNumber());
+        log.info("* test case [" + getCaseName(iTestResult) + "] started | # " + RunTimeDataStorage.Statistic.getCaseOrderNumber());
         log.info("* suite [" + getSuiteName(iTestResult) + "]");
         Utils.printDoubleLine();
     }

@@ -1,6 +1,8 @@
 package project.cases;
 
 import org.testng.Assert;
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import project.data.TestUsers;
 import project.models.User;
@@ -9,11 +11,21 @@ import project.pages.example.GoogleStartPage;
 import ru.yandex.qatools.htmlelements.annotations.Name;
 
 @Name("Try to login with wrong email")
-@Test(groups = {"regression"})
+@Test(groups = {"regression", "ui"})
 public class WrongCredsTest extends CommonActionsTest {
 
     GoogleStartPage startPage;
     GoogleSignInEmailPage signInEmailPage;
+
+    @BeforeClass(alwaysRun = true)
+    public void beforeClass() {
+        openBrowser();
+    }
+
+    @AfterClass(alwaysRun = true)
+    public void afterClass() {
+        closeBrowser();
+    }
 
     @Test
     void tc_wrngcrds_01_submit_wrong_email() {
@@ -31,17 +43,17 @@ public class WrongCredsTest extends CommonActionsTest {
         signInEmailPage.printEmail(userBadEmail.getEmail());
         signInEmailPage = signInEmailPage.clickNextButtonWrongEmail();
 
-        SoftAssert.assertTrue(
+        softAssert.assertTrue(
                 signInEmailPage.isErrorNoticeDisplayed(),
                 "'Could not find your account' notification is displayed"
         );
 
-        SoftAssert.assertTrue(
+        softAssert.assertTrue(
                 signInEmailPage.isEmailInputDisplayed(),
                 "Email input is still displayed"
         );
 
-        SoftAssert.assertAll();
+        softAssert.assertAll();
     }
 
 }

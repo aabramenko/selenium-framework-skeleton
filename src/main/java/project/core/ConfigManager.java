@@ -8,14 +8,24 @@ public class ConfigManager {
 
     private final static String runConfigTag = Constants.RUN_CONFIG_FILE_MAIN_TAG;
     private final static String envConfigTag = Constants.ENV_CONFIG_FILE_MAIN_TAG;
+    private final static String dbConfigTag = Constants.DB_CONFIG_FILE_MAIN_TAG;
 
     private static Logger log = Logger.getLogger("");
 
     private static Config runConfig;
     private static Config envConfig;
+    private static Config dbConfig;
 
     public static Config getRunConfig() {
         return runConfig;
+    }
+
+    public static Config getDbConfig() {
+        return dbConfig;
+    }
+
+    public static Config getEnvConfig() {
+        return envConfig;
     }
 
     public static void uploadRunConfigValues() {
@@ -27,6 +37,17 @@ public class ConfigManager {
         }
         log.info("run config file is: " + configFileName);
         runConfig = ConfigFactory.load(configFileName);
+    }
+
+    public static void uploadDbConfigValues() {
+        log.info("uploading db configs");
+        String valFromSystem = System.getProperty("db_config");
+        String configFileName = "db_config_main";
+        if (valFromSystem != null) {
+            configFileName = valFromSystem;
+        }
+        log.info("db config file is: " + configFileName);
+        dbConfig = ConfigFactory.load(configFileName);
     }
 
     public static void uploadEnvConfigValues() {
@@ -63,6 +84,22 @@ public class ConfigManager {
         else {
             return envConfig.getString(envConfigTag + ".browser");
         }
+    }
+
+    public static String getDbUsername() {
+        return dbConfig.getString(dbConfigTag + ".username");
+    }
+
+    public static String getDbPassword() {
+        return dbConfig.getString(dbConfigTag + ".password");
+    }
+
+    public static String getDbServer() {
+        return dbConfig.getString(dbConfigTag + ".server");
+    }
+
+    public static String getDbPort() {
+        return dbConfig.getString(dbConfigTag + ".port");
     }
 
     public static int getWaitForPageUploadSec() {

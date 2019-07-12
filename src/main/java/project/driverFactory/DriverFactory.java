@@ -17,7 +17,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.logging.Level;
 
-public class NewDriverFactory {
+public class DriverFactory {
 
     private static Logger log = Logger.getLogger("");
 

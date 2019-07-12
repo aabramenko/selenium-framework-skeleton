@@ -6,6 +6,8 @@ public class Constants {
 
     public static final String ENV_CONFIG_FILE_MAIN_TAG = "env_config";
 
+    public static final String DB_CONFIG_FILE_MAIN_TAG = "db_config";
+
     public static final String CREDS_FILE_MAIN_TAG = "creds";
 
     public static final int WAIT_UNTIL_CLICKABLE_SEC = 20;

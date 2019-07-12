@@ -2,20 +2,20 @@ package project.core;
 
 public class RunTimeDataStorage {
 
-    public static class RunningTestStatistic {
+    public static class Statistic {
 
-        private static int testOrderNumber;
+        private static int caseOrderNumber;
 
-        public static void resetTestOrderNumber() {
-            testOrderNumber = 0;
+        public static void resetCaseOrderNumber() {
+            caseOrderNumber = 0;
         }
 
-        public static void incrementTestOrderNumber() {
-            testOrderNumber ++;
+        public static void incrementCaseOrderNumber() {
+            caseOrderNumber++;
         }
 
-        public static int getTestOrderNumber() {
-            return testOrderNumber;
+        public static int getCaseOrderNumber() {
+            return caseOrderNumber;
         }
     }
 

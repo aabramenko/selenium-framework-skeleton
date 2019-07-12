@@ -11,8 +11,6 @@ public class TestListener implements ITestListener {
 
     private WebDriver driver;
 
-    private static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger("");
-
     @Override
     public void onTestStart(ITestResult iTestResult) {
         Logger.printTestInfoHeader(iTestResult);
@@ -23,12 +21,16 @@ public class TestListener implements ITestListener {
 
         driver = ((AbstractTest) iTestResult.getInstance()).getDriver();
 
-        if (ConfigManager.isHtmlOnSuccess()) {
-            Logger.logPageSource(iTestResult, driver);
-        }
+        if (driver != null) {
 
-        if (ConfigManager.isScreenOnSuccess()) {
-            Logger.logScreenshot(iTestResult, driver);
+            if (ConfigManager.isHtmlOnSuccess()) {
+                Logger.logPageSource(iTestResult, driver);
+            }
+
+            if (ConfigManager.isScreenOnSuccess()) {
+                Logger.logScreenshot(iTestResult, driver);
+            }
+
         }
 
         Logger.printTestInfoBottom(iTestResult);
@@ -39,27 +41,31 @@ public class TestListener implements ITestListener {
 
         driver = ((AbstractTest) iTestResult.getInstance()).getDriver();
 
-        if (ConfigManager.isHtmlOnFailure()) {
-            Logger.logPageSource(iTestResult, driver);
-        }
+        if (driver != null) {
 
-        if (ConfigManager.isScreenOnFailure()) {
-            Logger.logScreenshot(iTestResult, driver);
-        }
+            if (ConfigManager.isHtmlOnFailure()) {
+                Logger.logPageSource(iTestResult, driver);
+            }
 
-        Logger.logCurrentUrl(driver);
+            if (ConfigManager.isScreenOnFailure()) {
+                Logger.logScreenshot(iTestResult, driver);
+            }
+
+            Logger.logCurrentUrl(driver);
+
+        }
 
         Logger.printTestInfoBottom(iTestResult);
     }
 
     @Override
     public void onTestSkipped(ITestResult iTestResult) {
-
+        //
     }
 
     @Override
     public void onTestFailedButWithinSuccessPercentage(ITestResult iTestResult) {
-
+        //
     }
 
     @Override
@@ -69,6 +75,6 @@ public class TestListener implements ITestListener {
 
     @Override
     public void onFinish(ITestContext iTestContext) {
-
+        //
     }
 }

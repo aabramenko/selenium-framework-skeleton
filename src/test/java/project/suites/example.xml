@@ -1,5 +1,5 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<suite name="regression" parallel="tests" thread-count="2">
+<suite name="regression" parallel="tests" thread-count="3">
     <groups>
         <run>
             <include name="regression" />
@@ -10,9 +10,14 @@
             <class name="project.cases.ValidateCurrencyRateTest" />
         </classes>
     </test>
-    <test name="Wrong Credentials">
+    <test name="Wrong Creds">
         <classes>
             <class name="project.cases.WrongCredsTest" />
+        </classes>
+    </test>
+    <test name="DB test">
+        <classes>
+            <class name="project.cases.DbTest" />
         </classes>
     </test>
 </suite>
