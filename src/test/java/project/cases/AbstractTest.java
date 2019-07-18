@@ -19,20 +19,21 @@ import static project.core.TestRunParams.getPathToAllArtifactsFolders;
 import static project.core.TestRunParams.getPathToCurrentArtifactsFolder;
 import static project.core.Utils.createFolder;
 import static project.core.Utils.deleteTempFiles;
+import static project.core.Utils.getCurrentThreadId;
 
 public abstract class AbstractTest {
 
     private Logger log = Logger.getLogger("");
 
-    private Driver classDriver;
-
     SoftAssertions softAssertj;
 
     SoftAssert softAssert;
 
+    private Driver d;
+
     public WebDriver getDriver() {
-        if (classDriver != null) {
-            return classDriver.getDriver();
+        if (d != null) {
+            return d.getDriver();
         }
         else {
             return null;
@@ -40,7 +41,11 @@ public abstract class AbstractTest {
     }
 
     @BeforeSuite(alwaysRun = true)
-    public void beforeRun() {
+    public void beforeAll() {
+        beforeAllActions();
+    }
+
+    private void beforeAllActions() {
         System.setProperty("org.uncommons.reportng.escape-output", "false");
 
         RunTimeDataStorage.Statistic.resetCaseOrderNumber();
@@ -67,6 +72,10 @@ public abstract class AbstractTest {
 
     @BeforeMethod(alwaysRun = true)
     public void beforeTestCase() {
+        beforeTestCaseActions();
+    }
+
+    private void beforeTestCaseActions() {
         softAssertj = new SoftAssertions();
         softAssert = new SoftAssert();
         RunTimeDataStorage.Statistic.incrementCaseOrderNumber();
@@ -77,29 +86,33 @@ public abstract class AbstractTest {
         //
     }
 
-    void openBrowser() {
-        classDriver = DriverFactory.getNewDriverInstance(ConfigManager.getBrowserName());
+    Driver openBrowser() {
+        d = DriverFactory.createNewDriverInstance(ConfigManager.getBrowserName());
         Utils.printDashedLine();
-        log.info("Browser: " + classDriver.getBrowserName() + " | thread: " + Utils.getCurrentThreadId());
-        log.info("Driver: " + classDriver.getDriver());
+        log.info("Browser: " + d.getBrowserName() + " | thread: " + getCurrentThreadId());
+        log.info("Driver: " + d.getDriver());
         Utils.printDashedLine();
-        classDriver.getDriver().manage().window().setSize(new Dimension(1366, 768));
+        d.getDriver().manage().window().setSize(new Dimension(1366, 768));
+        return d;
     }
 
     void closeBrowser() {
-        if (classDriver.getDriver() != null) {
+        if (d != null) {
             log.info("closing browser");
             Utils.printDashedLine();
-            log.info("Browser: " + classDriver.getBrowserName() + " | thread: " + Utils.getCurrentThreadId());
-            log.info("Driver: " + classDriver.getDriver());
+            log.info("Browser: " + d.getBrowserName() + " | thread: " + getCurrentThreadId());
+            log.info("Driver: " + d.getDriver());
             Utils.printDashedLine();
             try {
-                classDriver.getDriver().quit();
+                d.getDriver().quit();
                 Utils.sleepMsec(500);
             }
             catch (WebDriverException e) {
                 //
             }
+        }
+        else {
+            log.info("Driver is null!");
         }
     }
 }

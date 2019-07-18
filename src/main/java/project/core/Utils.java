@@ -10,6 +10,8 @@ import ru.yandex.qatools.ashot.shooting.ShootingStrategies;
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.*;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.List;
@@ -369,8 +371,9 @@ public class Utils {
     }
 
     public static String removePackageNameFromPath(String str) {
-        str = str.replace("project.cases.", "");
+        str = str.replace("project.steps.", "");
         str = str.replace("project.pages.example.", "");
+        str = str.replace("project.cases.", "");
         return str;
     }
 
@@ -409,6 +412,20 @@ public class Utils {
 
     public static long getCurrentThreadId() {
         return Thread.currentThread().getId();
+    }
+
+    private static double round(double value, int places) {
+        BigDecimal bd = new BigDecimal(Double.toString(value));
+        bd = bd.setScale(places, RoundingMode.HALF_UP);
+        return bd.doubleValue();
+    }
+
+    public static double round(String stringValue, int places) {
+        stringValue = stringValue.replace(",", ".").trim();
+        double value = Double.parseDouble(stringValue.trim());
+        BigDecimal bd = new BigDecimal(Double.toString(value));
+        bd = bd.setScale(places, RoundingMode.HALF_UP);
+        return bd.doubleValue();
     }
 
 }

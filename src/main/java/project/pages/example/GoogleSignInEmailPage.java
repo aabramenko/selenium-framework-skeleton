@@ -58,4 +58,9 @@ public class GoogleSignInEmailPage extends AbstractPage {
         return isElementPresent(couldNotFindAccNotice, 1);
     }
 
+    public boolean isErrorNoticeDisplayed(String errorText) {
+        String xpath = "//*[text()=\"{t}\"]".replace("{t}", errorText);
+        return isElementPresent(By.xpath(xpath), 1);
+    }
+
 }

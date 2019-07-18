@@ -8,6 +8,8 @@ import org.openqa.selenium.support.FindBy;
 import project.core.ConfigManager;
 import project.locators.example.GoogleResultsPageLocators;
 import project.pages.AbstractPage;
+import ru.yandex.qatools.htmlelements.element.Select;
+import ru.yandex.qatools.htmlelements.element.TextInput;
 
 public class GoogleResultsPage extends AbstractPage {
 
@@ -16,18 +18,19 @@ public class GoogleResultsPage extends AbstractPage {
     @FindBy(xpath = GoogleResultsPageLocators.CURRENCY_CONVERTER_AREA)
     private WebElement currencyConverterArea;
 
-    @FindBy(xpath = GoogleResultsPageLocators.CONVERTER_AREA_CURRENCY_FROM)
-    private WebElement currencyFrom;
+    @FindBy(xpath = GoogleResultsPageLocators.CONVERTER_AREA_CURRENCY_FROM_SELECT)
+    private Select currencyFromSelector;
 
-    @FindBy(xpath = GoogleResultsPageLocators.CONVERTER_AREA_CURRENCY_TO)
-    private WebElement currencyTo;
+    @FindBy(xpath = GoogleResultsPageLocators.CONVERTER_AREA_CURRENCY_TO_SELECT)
+    private Select currencyToSelector;
 
-    @FindBy(xpath = GoogleResultsPageLocators.CONVERTER_AREA_AMOUNT_TO)
-    private WebElement amountTo;
+    @FindBy(xpath = GoogleResultsPageLocators.CONVERTER_AREA_AMOUNT_TO_INPUT)
+    private TextInput amountToInput;
 
     GoogleResultsPage(final WebDriver driver) {
         super(driver);
         waitForPageToLoadAndVerifyBy(By.xpath(GoogleResultsPageLocators.RESULT_STATS_AREA), ConfigManager.getWaitForPageUploadSec());
+        waitUntilPageScriptsReady();
     }
 
     public int getNumberOfResultsOnPage() {
@@ -40,20 +43,20 @@ public class GoogleResultsPage extends AbstractPage {
         return isElementPresent(currencyConverterArea, 1);
     }
 
-    public String getConverterAreaCurrencyFrom() {
-        String currency = currencyFrom.getText();
+    public String getConverterAreaSelectorCurrencyFromText() {
+        String currency = currencyFromSelector.getFirstSelectedOption().getText();
         log.info("Currency From = " + currency);
         return currency;
     }
 
-    public String getConverterAreaCurrencyTo() {
-        String currency = currencyTo.getText();
+    public String getConverterAreaCurrencyToText() {
+        String currency = currencyToSelector.getFirstSelectedOption().getText();
         log.info("Currency To = " + currency);
         return currency;
     }
 
-    public String getConverterAreaAmountTo() {
-        String amount = amountTo.getText();
+    public String getConverterAreaAmountToText() {
+        String amount = amountToInput.getText();
         log.info("Amount To = " + amount);
         return amount;
     }

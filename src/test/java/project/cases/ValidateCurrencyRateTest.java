@@ -7,14 +7,14 @@ import org.testng.annotations.Test;
 import project.core.Dictionary;
 import project.data.TestData;
 import project.pages.example.GoogleResultsPage;
-import project.pages.example.GoogleStartPage;
+import project.pages.example.GoogleSearchPage;
 import ru.yandex.qatools.htmlelements.annotations.Name;
 
 @Name("Validate currency rate")
 @Test(groups = {"regression", "ui"})
 public class ValidateCurrencyRateTest extends CommonActionsTest {
 
-    GoogleStartPage startPage;
+    GoogleSearchPage searchPage;
     GoogleResultsPage resultsPage;
 
     @BeforeClass(alwaysRun = true)
@@ -30,15 +30,15 @@ public class ValidateCurrencyRateTest extends CommonActionsTest {
     @Test
     public void tc_rate_01_open_google_start_page() {
 
-        startPage = openGoogleStartPage();
+        searchPage = openGoogleSearchPage();
 
         softAssert.assertTrue(
-                startPage.isGoogleSearchButtonDisplayed(),
+                searchPage.isGoogleSearchButtonDisplayed(),
                 "'Google Search' button is displayed"
         );
 
         softAssert.assertTrue(
-                startPage.isSearchLineDisplayed(),
+                searchPage.isSearchLineDisplayed(),
                 "Search Line is displayed"
         );
 
@@ -48,7 +48,7 @@ public class ValidateCurrencyRateTest extends CommonActionsTest {
     @Test(dependsOnMethods = "tc_rate_01_open_google_start_page")
     public void tc_rate_02_search_current_rate() {
 
-        resultsPage = startPage.search(TestData.CASE_02_TEXT_EURO_RATE_TO_USD);
+        resultsPage = searchPage.search(TestData.CASE_02_TEXT_EURO_RATE_TO_USD);
 
         Assert.assertTrue(
                 resultsPage.getNumberOfResultsOnPage() > 0,
@@ -61,13 +61,13 @@ public class ValidateCurrencyRateTest extends CommonActionsTest {
         );
 
         Assert.assertEquals(
-                resultsPage.getConverterAreaCurrencyFrom().toUpperCase(),
+                resultsPage.getConverterAreaSelectorCurrencyFromText().toUpperCase(),
                 TestData.CASE_02_EXPECTED_CURRENCY_FROM.toUpperCase(),
                 "Name of currency 'From'"
         );
 
         Assert.assertEquals(
-                resultsPage.getConverterAreaCurrencyTo().toUpperCase(),
+                resultsPage.getConverterAreaCurrencyToText().toUpperCase(),
                 TestData.CASE_02_EXPECTED_CURRENCY_TO.toUpperCase(),
                 "Name of currency 'To'"
         );
@@ -76,7 +76,7 @@ public class ValidateCurrencyRateTest extends CommonActionsTest {
     @Test(dependsOnMethods = "tc_rate_02_search_current_rate")
     public void tc_rate_03_compare_with_data_from_bank() {
 
-        String amountFromGoogle = resultsPage.getConverterAreaAmountTo();
+        String amountFromGoogle = resultsPage.getConverterAreaAmountToText();
 
         String amountFromBank = getCurrencyAmountFromBank(Dictionary.USD);
 

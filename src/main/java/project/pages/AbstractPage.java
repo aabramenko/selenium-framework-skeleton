@@ -222,7 +222,7 @@ public abstract class AbstractPage {
 
     // ---- wait for page scripts to upload ----
 
-    public void waitUntilScriptsReady() {
+    public void waitUntilPageScriptsReady() {
         log.info("wait until page scripts are ready");
         waitUntilJSReady();
         waitForJQueryLoad();

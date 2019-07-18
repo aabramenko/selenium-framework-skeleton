@@ -7,14 +7,14 @@ import org.testng.annotations.Test;
 import project.data.TestUsers;
 import project.models.User;
 import project.pages.example.GoogleSignInEmailPage;
-import project.pages.example.GoogleStartPage;
+import project.pages.example.GoogleSearchPage;
 import ru.yandex.qatools.htmlelements.annotations.Name;
 
 @Name("Try to login with wrong email")
 @Test(groups = {"regression", "ui"})
 public class WrongCredsTest extends CommonActionsTest {
 
-    GoogleStartPage startPage;
+    GoogleSearchPage searchPage;
     GoogleSignInEmailPage signInEmailPage;
 
     @BeforeClass(alwaysRun = true)
@@ -32,8 +32,8 @@ public class WrongCredsTest extends CommonActionsTest {
 
         User userBadEmail = TestUsers.getUserBadEmail();
 
-        startPage = openGoogleStartPage();
-        signInEmailPage = startPage.clickSignInButton();
+        searchPage = openGoogleSearchPage();
+        signInEmailPage = searchPage.clickSignInButton();
 
         Assert.assertTrue(
                 signInEmailPage.isEmailInputDisplayed(),

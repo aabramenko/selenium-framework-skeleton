@@ -4,19 +4,19 @@ import org.apache.log4j.Logger;
 import org.w3c.dom.Document;
 import project.core.XmlManager;
 import project.data.TestData;
-import project.pages.example.GoogleStartPage;
+import project.pages.example.GoogleSearchPage;
 
 public class CommonActionsTest extends AbstractTest {
 
     private Logger log = Logger.getLogger("");
 
-    GoogleStartPage openGoogleStartPage() {
-        log.info("open Start Search Page");
+    protected GoogleSearchPage openGoogleSearchPage() {
+        log.info("open Google start page");
         getDriver().get(TestData.GOOGLE_START_PAGE);
-        return new GoogleStartPage(getDriver());
+        return new GoogleSearchPage(getDriver());
     }
 
-    String getCurrencyAmountFromBank(String currencyName) {
+    protected String getCurrencyAmountFromBank(String currencyName) {
         log.info("getting amount of " + currencyName + " from bank");
         String url = TestData.URL_XML_TODAYS_RATES_FROM_BANK;
         Document doc = XmlManager.uploadXmlFromUrl(url);

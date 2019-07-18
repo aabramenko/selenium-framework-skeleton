@@ -102,14 +102,14 @@ public class Db {
             log.info("connection to DB is established");
         } catch (SQLException e) {
             log.warn("something went wrong during connection establishing");
-            e.printStackTrace();
+            // e.printStackTrace();
         }
         try {
             this.stmt = conn.createStatement();
             log.info("statement is created");
         } catch (SQLException e) {
             log.warn("something went wrong during statement creation");
-            e.printStackTrace();
+            // e.printStackTrace();
         }
     }
 
@@ -122,7 +122,7 @@ public class Db {
                 log.info("result set closed");
             } catch (SQLException e) {
                 log.warn("something went wrong during result set closing");
-                e.printStackTrace();
+                // e.printStackTrace();
             }
         }
         try {
@@ -130,14 +130,14 @@ public class Db {
             log.info("statement closed");
         } catch (SQLException e) {
             log.warn("something went wrong during statement closing");
-            e.printStackTrace();
+            // e.printStackTrace();
         }
         try {
             conn.close();
             log.info("connection closed");
         } catch (SQLException e) {
             log.warn("something went wrong during connection closing");
-            e.printStackTrace();
+            // e.printStackTrace();
         }
     }
 
@@ -149,7 +149,7 @@ public class Db {
             this.rs = rs;
         } catch (SQLException e) {
             log.warn("something went wrong during query execution");
-            e.printStackTrace();
+            // e.printStackTrace();
         }
     }
 
@@ -163,8 +163,8 @@ public class Db {
             res = rs.getString(1);
             log.info("query string result is: " + res);
         } catch (SQLException e) {
-            log.info("something went wrong during getting a string result from result set");
-            e.printStackTrace();
+            log.warn("something went wrong during getting a string result from result set");
+            // e.printStackTrace();
         }
         return res;
     }
@@ -175,8 +175,8 @@ public class Db {
             res = rs.getString(column);
             log.info("query string result is: " + res);
         } catch (SQLException e) {
-            log.info("something went wrong during getting a string result from result set");
-            e.printStackTrace();
+            log.warn("something went wrong during getting a string result from result set");
+            // e.printStackTrace();
         }
         return res;
     }

@@ -11,13 +11,14 @@ import project.pages.AbstractPage;
 import ru.yandex.qatools.htmlelements.element.Button;
 import ru.yandex.qatools.htmlelements.element.TextInput;
 
-public class GoogleStartPage extends AbstractPage {
+public class GoogleSearchPage extends AbstractPage {
 
     private final Logger log = Logger.getLogger(this.getClass());
 
-    public GoogleStartPage(final WebDriver driver) {
+    public GoogleSearchPage(final WebDriver driver) {
         super(driver);
         waitForPageToLoadAndVerifyBy(By.xpath(GoogleStartPageLocators.GOOGLE_SEARCH_BUTON), ConfigManager.getWaitForPageUploadSec());
+        waitUntilPageScriptsReady();
     }
 
     @FindBy(xpath = GoogleStartPageLocators.GOOGLE_SEARCH_BUTON)

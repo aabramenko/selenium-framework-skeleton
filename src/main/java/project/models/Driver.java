@@ -1,6 +1,5 @@
 package project.models;
 
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.remote.RemoteWebDriver;
 
 public class Driver {
@@ -16,7 +15,7 @@ public class Driver {
         this.browserName = browserName;
     }
 
-    public WebDriver getDriver() {
+    public RemoteWebDriver getDriver() {
         return driver;
     }
 
@@ -24,7 +23,4 @@ public class Driver {
         return browserName;
     }
 
-    public String getRemoteSessionId() {
-        return driver.getSessionId().toString();
-    }
 }

@@ -23,7 +23,7 @@ public class DriverFactory {
 
     static DriverOptionsManager optionsManager = new DriverOptionsManager();
 
-    public static Driver getNewDriverInstance(String browserParameter) {
+    public static Driver createNewDriverInstance(String browserParameter) {
 
         RemoteWebDriver driver = null;
         String browserName = null;
