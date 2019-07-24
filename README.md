@@ -1,59 +1,86 @@
-TBD
+How to run:
+===========
 
-Plan:
-- [Done] create example test cases
-- support of working with DB
-- BDD
+simple way: ```mvn test```
+
+run with parameters:
+
+```mvn test -Drun_config=run_config_file -Denv_config=env_config_file -Dbrowser=chrome -Dheadless=true -Dsuite=suitefile.xml -Ddb_config=db_config_file -Dcreds=creds_file -Dgrid=true -Dselenoid=true```
+
+where:
+
+---------------
+
+-Drun_config=run_config_file: name of ".conf" file with high level test execution parameters such as paths
+
+Default value: run_config_main.conf
+
+---------------
+
+-Denv_config=env_config_file: name of ".conf" file with test execution parameters such as browser
+
+Default value: env_config_main.conf
+
+---------------
+
+-Dbrowser=chrome: the browser type what will be used for test run
+
+Possible values: "chrome", "firefox"
+
+Default value: defined in the run_config file
+
+---------------
+
+-Dheadless=true: set this parameter to "true" if you want to launch a browser in headless mode
+
+Default value: defined in the run_config file
+
+---------------
+
+-Dsuite=suitefile.xml: testNG suite file
+
+Default value: defined in the POM file
+
+---------------
+
+-Ddb_config=db_config_file: name of ".conf" file with a db connection parameters
+
+Default value: db_config_main.conf
+
+---------------
+
+-Dcreds=creds_file: name of ".conf" file with test users credentials
+
+Default value: creds_main.conf
+
+---------------
+
+-Dgrid=true: set the parameter value to "true" if you would like to execute tests against selenium Grid; selenium Grid hub and nodes should be launched before your tests run
+
+Default value: defined in the run_config file
+
+---------------
+
+-Dselenoid=true: set the parameter value to "true" if you would like to execute tests inside selenoid docker container; the container should be launched before your tests run
+
+Default value: defined in the run_config file
 
 
-selenium-framework-skeleton
-===========================
-
-This code allows to quickly start a selenium test automation framework preparation.
-It already has all necessary possibilities to run test cases against a web based application.
-The skeleton contains several test cases for demonstration purpose; you may use them as example for your own test cases.
-
-How to run
+Reporting:
 ==========
 
-In order to run the example test cases just execute:
+For now there are two types of report files:
 
-```mvn test```
+1. ReportNG
 
-The whole command is:
+The report is generated automatically after each maven run and located at the folder "/target/surefire-reports/html/"
 
-```
-mvn test -Dsuite=suitename.xml -Drun_config=run_config_file -Denv_config=env_config_file -Dcreds=creds_file -Ddb_config=db_config_file -Dbrowser=firefox -Dheadless=true -Dgrid=false -Dselenoid=false
-```
+2. Allure report
 
-Where:
+In order to generate the report execute the following commands:
 
-**1) -Dsuite=suitename.xml: testNG xml suite to run. Default suite name is defined in the POM file.
+```mvn test ...```
 
-**2) -Drun_config=run_config_file: a config file with common test execution run parameters. The file "run_config_main" is used by default.
+```allure serve target/allure-results/``` 
 
-**3) -Denv_config=env_config_file: an environment config file. The file "env_config_main" is used by default.
-
-**4) -Dcreds=creds_file: a file with test user credentials and additional information. The file "creds_main" is used by default.
-
-**5) -Ddb_config=db_config_file: a file with DB connection details. The file "db_config_main" is used by default.
-
-**6) -Dbrowser=firefox: this parameter says that the Firefox browser should be used for the test execution run. Possible parameters.
-- firefox
-- chrome
-- mix
-
-If you run test cases in parallel and set "mix" - in this case the first thread will use Firefox, the second one will use Chrome and so on.
-
-If the browser parameter is not defined - the value from "env_config" file is used by default.
-
-**7) -Dheadless=true: means that browsers will be run in headless mode. The value from the "run_config" file is used by default.
-
-**8) -Dgrid=false: switch the value to "true" if you plan to launch test cases using Selenium Grid. The appropriate parameters are located in the "run_config" file.
-
-**9) -Dselenoid=false: switch the value to "true" if you plan to launch test cases inside Selenoid docker container. Default value is set in the "run_config" file.
-
-So it is possible to define the parameters above with two ways: using config files and using command line parametrization. The values from command line has higher priority.
-
-Reporting
-=========
+All reports have screenshots on test failures by default.

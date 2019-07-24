@@ -24,6 +24,7 @@ public class CommonActionsTest extends AbstractTest {
                 doc,
                 TestData.XML_XPATH_GET_RATE_BY_CURRENCY_NAME.replace("{NAME}", currencyName.toUpperCase())
         );
+        log.info("Bank api: " + currencyName + ": Rate = " + amount);
         return amount;
     }
 

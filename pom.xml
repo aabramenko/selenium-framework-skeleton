@@ -8,11 +8,20 @@
     <artifactId>com.autotest</artifactId>
     <version>1.0-SNAPSHOT</version>
 
+    <developers>
+        <developer>
+            <id>aabramenko</id>
+            <name>Aleksei Abramenko</name>
+            <email>abramenko.alexey@gmail.com</email>
+        </developer>
+    </developers>
+
     <properties>
         <project.buiild.sourceEncoding>UTF-8</project.buiild.sourceEncoding>
         <aspectj.version>1.9.1</aspectj.version>
         <webdrivermanager.version>3.6.1</webdrivermanager.version>
         <maven-surefire-plugin.version>2.22.2</maven-surefire-plugin.version>
+        <allure.version>2.10.0</allure.version>
         <!--Default values-->
         <suite>example.xml</suite>
     </properties>
@@ -64,7 +73,7 @@
             <plugin>
                 <groupId>io.qameta.allure</groupId>
                 <artifactId>allure-maven</artifactId>
-                <version>2.10.0</version>
+                <version>${allure.version}</version>
             </plugin>
         </plugins>
     </build>
@@ -140,13 +149,13 @@
         <dependency>
             <groupId>io.qameta.allure</groupId>
             <artifactId>allure-testng</artifactId>
-            <version>2.12.1</version>
+            <version>${allure.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>io.qameta.allure</groupId>
             <artifactId>allure-java-commons</artifactId>
-            <version>2.12.1</version>
+            <version>${allure.version}</version>
             <scope>compile</scope>
         </dependency>
         <dependency>

@@ -57,7 +57,7 @@ public class GoogleResultsPage extends AbstractPage {
 
     public String getConverterAreaAmountToText() {
         String amount = amountToInput.getText();
-        log.info("Amount To = " + amount);
+        log.info("Google Page: Rate = " + amount);
         return amount;
     }
 
