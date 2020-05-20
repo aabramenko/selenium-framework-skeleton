@@ -1,0 +1,37 @@
+version: "3.6"
+services:
+  build-image:
+    build:
+      context: ../
+      dockerfile: docker/Dockerfile
+    image: aabramenko/selenium-test-environment
+  hub:
+    image: selenium/hub:3.14
+    ports:
+      - "4444:4444"
+  chrome:
+    image: selenium/node-chrome:3.14
+    shm_size: '512mb'
+    depends_on:
+      - hub
+    environment:
+      - HUB_HOST=hub
+  firefox:
+    image: selenium/node-firefox:3.14
+    shm_size: '512mb'
+    depends_on:
+      - hub
+    environment:
+      - HUB_HOST=hub
+  test-environment:
+    image: aabramenko/selenium-test-environment
+    depends_on:
+      - firefox
+      - chrome
+      - build-image
+    environment:
+      - HUB_HOST=hub
+      - BROWSER=${BROWSER}
+      - HEADLESS=${HEADLESS}
+    volumes:
+    - ../test-results:/usr/share/selenium-tests/target

@@ -1,12 +1,14 @@
-package project.pages.example;
+package project.pages.google;
 
 import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import project.core.ConfigManager;
-import project.locators.example.GoogleResultsPageLocators;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+import project.core.TestRunParams;
+import project.locators.GoogleResultsPageLocators;
 import project.pages.AbstractPage;
 import ru.yandex.qatools.htmlelements.element.Select;
 import ru.yandex.qatools.htmlelements.element.TextInput;
@@ -29,7 +31,7 @@ public class GoogleResultsPage extends AbstractPage {
 
     GoogleResultsPage(final WebDriver driver) {
         super(driver);
-        waitForPageToLoadAndVerifyBy(By.xpath(GoogleResultsPageLocators.RESULT_STATS_AREA), ConfigManager.getWaitForPageUploadSec());
+        waitForPageToLoadAndVerifyBy(By.xpath(GoogleResultsPageLocators.RESULT_STATISTICS), TestRunParams.getWaitForPageUploadSec());
         waitUntilPageScriptsReady();
     }
 
@@ -43,22 +45,29 @@ public class GoogleResultsPage extends AbstractPage {
         return isElementPresent(currencyConverterArea, 1);
     }
 
-    public String getConverterAreaSelectorCurrencyFromText() {
+    public String getConverterAreaCurrencyFrom() {
         String currency = currencyFromSelector.getFirstSelectedOption().getText();
         log.info("Currency From = " + currency);
         return currency;
     }
 
-    public String getConverterAreaCurrencyToText() {
+    public String getConverterAreaCurrencyTo() {
         String currency = currencyToSelector.getFirstSelectedOption().getText();
         log.info("Currency To = " + currency);
         return currency;
     }
 
-    public String getConverterAreaAmountToText() {
+    public String getConverterAreaAmountTo() {
         String amount = amountToInput.getText();
         log.info("Google Page: Rate = " + amount);
         return amount;
+    }
+
+    public GoogleResultsPage waitUntilResultsDisplayed(int timeoutSec) {
+        log.info("wait until results are displayed");
+        WebDriverWait wait = new WebDriverWait(getDriver(), timeoutSec);
+        wait.until(ExpectedConditions.numberOfElementsToBeMoreThan(By.xpath(GoogleResultsPageLocators.SINGLE_RESULT), 0));
+        return new GoogleResultsPage(getDriver());
     }
 
 }

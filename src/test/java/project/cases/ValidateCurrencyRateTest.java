@@ -1,59 +1,41 @@
 package project.cases;
 
+import org.apache.log4j.Logger;
 import org.testng.Assert;
-import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
+import org.testng.annotations.Optional;
+import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
+import org.w3c.dom.Document;
 import project.core.Dictionary;
+import project.core.Utils;
+import project.core.XmlManager;
 import project.data.TestData;
-import project.pages.example.GoogleResultsPage;
-import project.pages.example.GoogleSearchPage;
+import project.pages.google.GoogleResultsPage;
+import project.pages.google.GoogleSearchPage;
 import ru.yandex.qatools.htmlelements.annotations.Name;
 
-@Name("Validate currency rate")
-@Test(groups = {"regression", "ui"})
-public class ValidateCurrencyRateTest extends CommonActionsTest {
+@Name("Compare EUR currency rates from a bank and Google page")
+@Test(groups = {Dictionary.REGRESSION, Dictionary.UI})
+public class ValidateCurrencyRateTest extends BaseTest {
 
     GoogleSearchPage searchPage;
     GoogleResultsPage resultsPage;
+    Document officialRates;
+    int expected_delta_percent = 5;
+    private final Logger log = Logger.getLogger(this.getClass());
 
-    @BeforeClass(alwaysRun = true)
-    public void beforeClass() {
-        openBrowser();
+    @BeforeClass
+    void precondition() {
+        officialRates = XmlManager.uploadXmlFromUrlToDocument(TestData.URL_XML_TODAYS_RATES_FROM_BANK);
     }
 
-    @AfterClass(alwaysRun = true)
-    public void afterClass() {
-        closeBrowser();
-    }
-
+    @Parameters({ "currency_name" })
     @Test
-    public void tc_rate_01_open_google_start_page() {
+    void tc_rate_01_search_EUR_rate_and_compare_with_official_one(@Optional("usd") String currency_name) {
 
         searchPage = openGoogleSearchPage();
-
-        softAssert.assertTrue(
-                searchPage.isGoogleSearchButtonDisplayed(),
-                "'Google Search' button is displayed"
-        );
-
-        softAssert.assertTrue(
-                searchPage.isSearchLineDisplayed(),
-                "Search Line is displayed"
-        );
-
-        softAssert.assertAll();
-    }
-
-    @Test(dependsOnMethods = "tc_rate_01_open_google_start_page")
-    public void tc_rate_02_search_current_rate() {
-
-        resultsPage = searchPage.search(TestData.CASE_02_TEXT_EURO_RATE_TO_USD);
-
-        Assert.assertTrue(
-                resultsPage.getNumberOfResultsOnPage() > 0,
-                "Results page contains search results"
-        );
+        resultsPage = searchPage.search("euro rate to " + currency_name);
 
         Assert.assertTrue(
                 resultsPage.isCurrencyConverterAreaDisplayed(),
@@ -61,29 +43,22 @@ public class ValidateCurrencyRateTest extends CommonActionsTest {
         );
 
         Assert.assertEquals(
-                resultsPage.getConverterAreaSelectorCurrencyFromText().toUpperCase(),
+                resultsPage.getConverterAreaCurrencyFrom().toUpperCase(),
                 TestData.CASE_02_EXPECTED_CURRENCY_FROM.toUpperCase(),
                 "Name of currency 'From'"
         );
 
-        Assert.assertEquals(
-                resultsPage.getConverterAreaCurrencyToText().toUpperCase(),
-                TestData.CASE_02_EXPECTED_CURRENCY_TO.toUpperCase(),
-                "Name of currency 'To'"
+        String amountFromGoogleString = resultsPage.getConverterAreaAmountTo();
+        String amountFromBankString = getCurrencyRateFromDocument(currency_name, officialRates);
+
+        double actual_delta_percent = Utils.getDeltaPercent(
+                Double.parseDouble(amountFromGoogleString),
+                Double.parseDouble(amountFromBankString)
         );
-    }
 
-    @Test(dependsOnMethods = "tc_rate_02_search_current_rate")
-    public void tc_rate_03_compare_with_data_from_bank() {
-
-        String amountFromGoogle = resultsPage.getConverterAreaAmountToText();
-
-        String amountFromBank = getCurrencyAmountFromBank(Dictionary.USD);
-
-        Assert.assertEquals(
-                amountFromGoogle,
-                amountFromBank,
-                "Rate"
+        Assert.assertTrue(
+                actual_delta_percent < expected_delta_percent,
+                "Rates has difference not more than " + expected_delta_percent + "%"
         );
     }
 

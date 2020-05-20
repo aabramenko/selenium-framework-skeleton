@@ -2,7 +2,6 @@ package project.core;
 
 import org.apache.log4j.Logger;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.remote.RemoteWebDriver;
 import ru.yandex.qatools.ashot.AShot;
 import ru.yandex.qatools.ashot.Screenshot;
 import ru.yandex.qatools.ashot.shooting.ShootingStrategies;
@@ -14,11 +13,9 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.text.SimpleDateFormat;
 import java.util.*;
-import java.util.List;
 
-import static project.core.ConfigManager.getPathToSampleFilesFolder;
-import static project.core.ConfigManager.isSelenoid;
-import static project.core.TestRunParams.*;
+import static project.core.TestRunParams.getPathToDownloads;
+import static project.core.TestRunParams.getPathToSampleFilesFolder;
 
 public class Utils {
 
@@ -133,13 +130,13 @@ public class Utils {
         OutputStream oOutStream = null;
 
         try {
-            oInStream = new FileInputStream(ConfigManager.getPathToSampleFilesFolder() + sampleFileName);
+            oInStream = new FileInputStream(TestRunParams.getPathToSampleFilesFolder() + sampleFileName);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
 
         try {
-            oOutStream = new FileOutputStream(ConfigManager.getPathToTestFilesFolder() + newFileName);
+            oOutStream = new FileOutputStream(TestRunParams.getPathToTestFilesFolder() + newFileName);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -177,7 +174,7 @@ public class Utils {
 
     private static void deleteTempFilesByExt(String ext) {
         GenericExtFilter filter = new GenericExtFilter(ext);
-        File fileDir = new File(ConfigManager.getPathToTestFilesFolder());
+        File fileDir = new File(TestRunParams.getPathToTestFilesFolder());
 
         //list out all the file name with .txt extension
         String[] list = fileDir.list(filter);
@@ -187,7 +184,7 @@ public class Utils {
         File fileDelete;
 
         for (String file : list){
-            String temp = new StringBuffer(ConfigManager.getPathToTestFilesFolder())
+            String temp = new StringBuffer(TestRunParams.getPathToTestFilesFolder())
                     .append(File.separator)
                     .append(file).toString();
             fileDelete = new File(temp);
@@ -246,9 +243,6 @@ public class Utils {
 
         if (!file.exists()) {
             log.error("the file was not downloaded after " + timeoutSec + " seconds: " + fileName);
-            if (ConfigManager.isSelenoid()) {
-                log.error("check out if the file is available on selenoid docker image");
-            }
             status = false;
         }
 
@@ -347,20 +341,6 @@ public class Utils {
         return string.toString();
     }
 
-    public static void manageFileDownloading(String fileName, RemoteWebDriver driver) {
-        if (isSelenoid()) {
-            log.info("downloading file from selenoid docker image");
-            sleepMsec(5000);
-            String gridFileUrl = ConfigManager.getGridHost() + "/download/" +
-                    driver.getSessionId() + "/" +
-                    fileName;
-            wgetFile(gridFileUrl);
-        }
-        else {
-            waitUntilFileIsDownloaded(fileName);
-        }
-    }
-
     public static String getCurrentOS() {
         return System.getProperty("os.name").toLowerCase();
     }
@@ -426,6 +406,12 @@ public class Utils {
         BigDecimal bd = new BigDecimal(Double.toString(value));
         bd = bd.setScale(places, RoundingMode.HALF_UP);
         return bd.doubleValue();
+    }
+
+    public static double getDeltaPercent(double amount1, double amount2) {
+        double delta = Math.abs( amount1 * 100 / amount2 - 100 );
+        log.info("delta of " + amount1 + " and " + amount2 + " is " + delta + "%");
+        return delta;
     }
 
 }

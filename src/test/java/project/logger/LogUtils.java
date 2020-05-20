@@ -9,18 +9,18 @@ import project.core.RunTimeDataStorage;
 import project.core.TestRunParams;
 import project.core.Utils;
 import ru.yandex.qatools.ashot.Screenshot;
+import org.apache.log4j.Logger;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
-public class Logger {
+public class LogUtils {
 
-    private static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger("");
+    private static Logger log = Logger.getLogger("");
 
     static void logPageSource(ITestResult iTestResult, WebDriver driver) {
-
         String caseStatus = Dictionary.FAILED;
         if (iTestResult.isSuccess()) {
             caseStatus = Dictionary.PASSED;
@@ -42,7 +42,7 @@ public class Logger {
         }
 
         // allure
-        putStringToAllure("page source is saved here: " + filePath);
+        submitStringToAllure("page source is saved here: " + filePath);
 
         // reportNg
         Reporter.log("<br><hr align='left' width='800' size='2' color='#BEBEBE' /><br>"
@@ -72,24 +72,22 @@ public class Logger {
         Utils.saveScreenshotAsFile(fileName, screenshot);
 
         // allure
-        putScreenshotToAllure(screenshot);
+        submitScreenshotToAllure(screenshot);
 
         // reportNg
-        putScreenshotToReportNg(fileName);
+        submitScreenshotToReportNg(fileName);
     }
 
     public static void logCurrentUrl(WebDriver driver) {
         String url = driver.getCurrentUrl();
-
         log.info("page url: " + url);
-
         // allure
-        putStringToAllure("page url: " + url);
+        submitStringToAllure("page url: " + url);
     }
 
     public static void printTestInfoHeader(ITestResult iTestResult) {
         Utils.printDoubleLine();
-        log.info("* test case [" + getCaseName(iTestResult) + "] started | # " + RunTimeDataStorage.Statistic.getCaseOrderNumber());
+        log.info("* test case [" + getCaseName(iTestResult) + "] started | # " + RunTimeDataStorage.Statistics.getCaseOrderNumber());
         log.info("* suite [" + getSuiteName(iTestResult) + "]");
         Utils.printDoubleLine();
     }
@@ -100,21 +98,20 @@ public class Logger {
             caseStatus = Dictionary.PASSED;
         }
         Utils.printDoubleLine();
-        log.info("* test case [" + getCaseName(iTestResult) + "] finished");
         log.info("* [ " + caseStatus.toUpperCase() + " ]");
+        log.info("* test case [" + getCaseName(iTestResult) + "] finished");
         log.info("* suite [" + getSuiteName(iTestResult) + "]");
         Utils.printDoubleLine();
-        log.info("");
         log.info("");
     }
 
     @Attachment(value = "info")
-    private static String putStringToAllure(String string) {
+    private static String submitStringToAllure(String string) {
         return string;
     }
 
     @Attachment(value = "screenshot", type = "image/png")
-    public static byte[] putScreenshotToAllure(Screenshot screenshot) {
+    public static byte[] submitScreenshotToAllure(Screenshot screenshot) {
         final BufferedImage image = screenshot.getImage();
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         try {
@@ -132,7 +129,7 @@ public class Logger {
         return imageInByte;
     }
 
-    private static void putScreenshotToReportNg(String fileName) {
+    private static void submitScreenshotToReportNg(String fileName) {
 
         String relativeFilePath = "../../" +
                 TestRunParams.getNameOfFolderWithAllTestRunArtifacts() +

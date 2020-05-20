@@ -5,7 +5,7 @@ import org.testng.ITestContext;
 import org.testng.ITestListener;
 import org.testng.ITestResult;
 import project.cases.AbstractTest;
-import project.core.ConfigManager;
+import project.core.TestRunParams;
 
 public class TestListener implements ITestListener {
 
@@ -13,49 +13,36 @@ public class TestListener implements ITestListener {
 
     @Override
     public void onTestStart(ITestResult iTestResult) {
-        Logger.printTestInfoHeader(iTestResult);
+        LogUtils.printTestInfoHeader(iTestResult);
     }
 
     @Override
     public void onTestSuccess(ITestResult iTestResult) {
-
         driver = ((AbstractTest) iTestResult.getInstance()).getDriver();
-
         if (driver != null) {
-
-            if (ConfigManager.isHtmlOnSuccess()) {
-                Logger.logPageSource(iTestResult, driver);
+            if (TestRunParams.isHtmlOnSuccess()) {
+                LogUtils.logPageSource(iTestResult, driver);
             }
-
-            if (ConfigManager.isScreenOnSuccess()) {
-                Logger.logScreenshot(iTestResult, driver);
+            if (TestRunParams.isScreenOnSuccess()) {
+                LogUtils.logScreenshot(iTestResult, driver);
             }
-
         }
-
-        Logger.printTestInfoBottom(iTestResult);
+        LogUtils.printTestInfoBottom(iTestResult);
     }
 
     @Override
     public void onTestFailure(ITestResult iTestResult) {
-
         driver = ((AbstractTest) iTestResult.getInstance()).getDriver();
-
         if (driver != null) {
-
-            if (ConfigManager.isHtmlOnFailure()) {
-                Logger.logPageSource(iTestResult, driver);
+            LogUtils.logCurrentUrl(driver);
+            if (TestRunParams.isHtmlOnFailure()) {
+                LogUtils.logPageSource(iTestResult, driver);
             }
-
-            if (ConfigManager.isScreenOnFailure()) {
-                Logger.logScreenshot(iTestResult, driver);
+            if (TestRunParams.isScreenOnFailure()) {
+                LogUtils.logScreenshot(iTestResult, driver);
             }
-
-            Logger.logCurrentUrl(driver);
-
         }
-
-        Logger.printTestInfoBottom(iTestResult);
+        LogUtils.printTestInfoBottom(iTestResult);
     }
 
     @Override

@@ -2,8 +2,7 @@ package project.core;
 
 public class RunTimeDataStorage {
 
-    public static class Statistic {
-
+    public static class Statistics {
         private static int caseOrderNumber;
 
         public static void resetCaseOrderNumber() {
@@ -18,5 +17,4 @@ public class RunTimeDataStorage {
             return caseOrderNumber;
         }
     }
-
 }

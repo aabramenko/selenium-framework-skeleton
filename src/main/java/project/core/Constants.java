@@ -2,9 +2,7 @@ package project.core;
 
 public class Constants {
 
-    public static final String RUN_CONFIG_FILE_MAIN_TAG = "run_config";
-
-    public static final String ENV_CONFIG_FILE_MAIN_TAG = "env_config";
+    public static final String RUN_PARAMETERS_FILE_MAIN_TAG = "run_parameters";
 
     public static final String DB_CONFIG_FILE_MAIN_TAG = "db_config";
 

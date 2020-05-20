@@ -16,8 +16,8 @@ public class XmlManager {
 
     private static Logger log = Logger.getLogger("");
 
-    public static Document uploadXmlFromUrl(String url) {
-        log.info("upload xml document from: " + url);
+    public static Document uploadXmlFromUrlToDocument(String url) {
+        log.info("getting xml document from: " + url);
         DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
         DocumentBuilder db = null;
         try {
@@ -38,7 +38,6 @@ public class XmlManager {
     }
 
     public static String getValueByXpath(Document doc, String xpathString) {
-        log.info("getting text value by xpath = " + xpathString);
         XPathFactory xPathFactory = XPathFactory.newInstance();
         XPath xpathObj = xPathFactory.newXPath();
         XPathExpression expr = null;
@@ -54,7 +53,6 @@ public class XmlManager {
             e.printStackTrace();
         }
         String value = node.item(0).getTextContent();
-        log.info("found value by xpath is: " + value);
         return value;
     }
 

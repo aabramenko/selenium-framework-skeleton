@@ -4,9 +4,9 @@ import org.apache.log4j.Logger;
 import org.w3c.dom.Document;
 import project.core.XmlManager;
 import project.data.TestData;
-import project.pages.example.GoogleSearchPage;
+import project.pages.google.GoogleSearchPage;
 
-public class CommonActionsTest extends AbstractTest {
+public class BaseTest extends AbstractTest {
 
     private Logger log = Logger.getLogger("");
 
@@ -16,15 +16,13 @@ public class CommonActionsTest extends AbstractTest {
         return new GoogleSearchPage(getDriver());
     }
 
-    protected String getCurrencyAmountFromBank(String currencyName) {
-        log.info("getting amount of " + currencyName + " from bank");
-        String url = TestData.URL_XML_TODAYS_RATES_FROM_BANK;
-        Document doc = XmlManager.uploadXmlFromUrl(url);
+    protected String getCurrencyRateFromDocument(String currencyName, Document doc) {
+        log.info("getting rate of " + currencyName + " from document");
         String amount = XmlManager.getValueByXpath(
                 doc,
                 TestData.XML_XPATH_GET_RATE_BY_CURRENCY_NAME.replace("{NAME}", currencyName.toUpperCase())
         );
-        log.info("Bank api: " + currencyName + ": Rate = " + amount);
+        log.info("Info from bank: " + currencyName + ": Rate = " + amount);
         return amount;
     }
 

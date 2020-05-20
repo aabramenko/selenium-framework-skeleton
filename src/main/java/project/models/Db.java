@@ -2,7 +2,7 @@ package project.models;
 
 import com.mysql.cj.jdbc.MysqlDataSource;
 import org.apache.log4j.Logger;
-import project.core.ConfigManager;
+import project.core.TestRunParams;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -91,12 +91,12 @@ public class Db {
     }
 
     public void connect() {
-        log.info("connect to DB on " + ConfigManager.getDbServer() + ":" + ConfigManager.getDbPort());
+        log.info("connect to DB on " + TestRunParams.getDbServer() + ":" + TestRunParams.getDbPort());
         MysqlDataSource dataSource = new MysqlDataSource();
-        dataSource.setUser(ConfigManager.getDbUsername());
-        dataSource.setPassword(ConfigManager.getDbPassword());
-        dataSource.setServerName(ConfigManager.getDbServer());
-        dataSource.setPort(Integer.valueOf(ConfigManager.getDbPort()));
+        dataSource.setUser(TestRunParams.getDbUsername());
+        dataSource.setPassword(TestRunParams.getDbPassword());
+        dataSource.setServerName(TestRunParams.getDbServer());
+        dataSource.setPort(Integer.valueOf(TestRunParams.getDbPort()));
         try {
             this.conn = dataSource.getConnection();
             log.info("connection to DB is established");

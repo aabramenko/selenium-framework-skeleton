@@ -1,0 +1,80 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="regression" parallel="tests" thread-count="6">
+    <groups>
+        <run>
+            <include name="regression" />
+        </run>
+    </groups>
+    <test name="Validate Currency Rate test RUB">
+        <parameter name="currency_name" value="rub"/>
+        <classes>
+            <class name="project.cases.ValidateCurrencyRateTest" />
+        </classes>
+    </test>
+    <test name="Validate Currency Rate test USD">
+        <parameter name="currency_name" value="usd"/>
+        <classes>
+            <class name="project.cases.ValidateCurrencyRateTest" />
+        </classes>
+    </test>
+    <test name="Validate Currency Rate test THB">
+        <parameter name="currency_name" value="thb"/>
+        <classes>
+            <class name="project.cases.ValidateCurrencyRateTest" />
+        </classes>
+    </test>
+    <test name="Validate Currency Rate test JPY">
+        <parameter name="currency_name" value="jpy"/>
+        <classes>
+            <class name="project.cases.ValidateCurrencyRateTest" />
+        </classes>
+    </test>
+    <test name="Validate Currency Rate test CAD">
+        <parameter name="currency_name" value="cad"/>
+        <classes>
+            <class name="project.cases.ValidateCurrencyRateTest" />
+        </classes>
+    </test>
+    <test name="Validate Currency Rate test CZK">
+        <parameter name="currency_name" value="czk"/>
+        <classes>
+            <class name="project.cases.ValidateCurrencyRateTest" />
+        </classes>
+    </test>
+    <test name="Validate Currency Rate test PLN">
+        <parameter name="currency_name" value="pln"/>
+        <classes>
+            <class name="project.cases.ValidateCurrencyRateTest" />
+        </classes>
+    </test>
+    <test name="Validate Currency Rate test NOK">
+        <parameter name="currency_name" value="nok"/>
+        <classes>
+            <class name="project.cases.ValidateCurrencyRateTest" />
+        </classes>
+    </test>
+    <test name="Validate Currency Rate test AUD">
+        <parameter name="currency_name" value="aud"/>
+        <classes>
+            <class name="project.cases.ValidateCurrencyRateTest" />
+        </classes>
+    </test>
+    <test name="Validate Currency Rate test BRL">
+        <parameter name="currency_name" value="brl"/>
+        <classes>
+            <class name="project.cases.ValidateCurrencyRateTest" />
+        </classes>
+    </test>
+    <test name="Validate Currency Rate test PHP">
+        <parameter name="currency_name" value="php"/>
+        <classes>
+            <class name="project.cases.ValidateCurrencyRateTest" />
+        </classes>
+    </test>
+    <test name="Validate Currency Rate test ZAR">
+        <parameter name="currency_name" value="zar"/>
+        <classes>
+            <class name="project.cases.ValidateCurrencyRateTest" />
+        </classes>
+    </test>
+</suite>

@@ -5,7 +5,7 @@ import com.typesafe.config.ConfigFactory;
 import org.apache.log4j.Logger;
 import project.models.User;
 
-public class CredsManager {
+public class CredentialsManager {
 
     private final static String credsTag = Constants.CREDS_FILE_MAIN_TAG;
 

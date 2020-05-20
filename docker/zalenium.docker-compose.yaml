@@ -1,0 +1,33 @@
+version: "3"
+services:
+  build-image:
+    build:
+      context: ../
+      dockerfile: docker/Dockerfile
+    image: aabramenko/selenium-test-environment
+  hub:
+    image: dosel/zalenium
+    logging:
+      driver: "none"
+    ports:
+      - "4444:4444"
+      - "5555:5555"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /usr/bin/docker:/usr/bin/docker
+    command: >
+      start --desiredContainers 6
+            --maxDockerSeleniumContainers 6
+            --maxTestSessions 6
+            --videoRecordingEnabled true
+  test-environment:
+    image: aabramenko/selenium-test-environment
+    depends_on:
+      - hub
+      - build-image
+    environment:
+      - HUB_HOST=hub
+      - BROWSER=${BROWSER}
+      - HEADLESS=${HEADLESS}
+    volumes:
+    - ../test-results:/usr/share/selenium-tests/target

@@ -1,86 +1,49 @@
-How to run:
-===========
+How to launch without dockerizing:
 
-simple way: ```mvn test```
+1. Install openjdk (tested with openjdk8 and openjdk11)
+2. Install Maven
+3. mvn test -DSUITE=test-suite.xml -DHEADLESS=false -DBROWSER=chrome -DGRID=false
 
-run with parameters:
-
-```mvn test -Drun_config=run_config_file -Denv_config=env_config_file -Dbrowser=chrome -Dheadless=true -Dsuite=suitefile.xml -Ddb_config=db_config_file -Dcreds=creds_file -Dgrid=true -Dselenoid=true```
-
-where:
-
----------------
-
--Drun_config=run_config_file: name of ".conf" file with high level test execution parameters such as paths
-
-Default value: run_config_main.conf
-
----------------
-
--Denv_config=env_config_file: name of ".conf" file with test execution parameters such as browser
-
-Default value: env_config_main.conf
-
----------------
-
--Dbrowser=chrome: the browser type what will be used for test run
-
-Possible values: "chrome", "firefox"
-
-Default value: defined in the run_config file
-
----------------
-
--Dheadless=true: set this parameter to "true" if you want to launch a browser in headless mode
-
-Default value: defined in the run_config file
-
----------------
-
--Dsuite=suitefile.xml: testNG suite file
-
-Default value: defined in the POM file
-
----------------
-
--Ddb_config=db_config_file: name of ".conf" file with a db connection parameters
-
-Default value: db_config_main.conf
-
----------------
-
--Dcreds=creds_file: name of ".conf" file with test users credentials
-
-Default value: creds_main.conf
-
----------------
-
--Dgrid=true: set the parameter value to "true" if you would like to execute tests against selenium Grid; selenium Grid hub and nodes should be launched before your tests run
-
-Default value: defined in the run_config file
-
----------------
-
--Dselenoid=true: set the parameter value to "true" if you would like to execute tests inside selenoid docker container; the container should be launched before your tests run
-
-Default value: defined in the run_config file
+Reports will be stored into the "/selenium-framework-skeleton/target" folder
 
 
-Reporting:
-==========
+How to launch using Selenium/Hub and Selenium/Node:
 
-For now there are two types of report files:
+1. Install docker
+2. Install docker-compose
+3. BROWSER=firefox HEADLESS=true docker-compose -f docker/basic.docker-compose.yaml up --scale firefox=6 --scale chrome=0
+   or
+   BROWSER=chrome HEADLESS=true docker-compose -f docker/basic.docker-compose.yaml up --scale chrome=6 --scale firefox=0
 
-1. ReportNG
+Reports will be stored into the "/selenium-framework-skeleton/test-result" folder
 
-The report is generated automatically after each maven run and located at the folder "/target/surefire-reports/html/"
 
-2. Allure report
+How to launch using Zalenium
 
-In order to generate the report execute the following commands:
+1. docker pull elgalu/selenium
+2. docker pull dosel/zalenium
+3. BROWSER=chrome HEADLESS=true docker-compose -f docker/zalenium.docker-compose.yaml up
+   or
+   BROWSER=firefox HEADLESS=true docker-compose -f docker/zalenium.docker-compose.yaml up
 
-```mvn test ...```
+The realization is in progress yet, but looks like this approach does not have any advantages, so don't spend much time for that.  
 
-```allure serve target/allure-results/``` 
 
-All reports have screenshots on test failures by default.
+How to launch using Selenoid
+
+1. docker pull selenoid/firefox:76.0
+2. docker pull selenoid/chrome:83.0
+3. docker pull selenoid/video-recorder:latest-release // if you would like to record video
+4. docker-compose -f docker/selenoid.docker-compose.yaml up -d
+5. docker build -t aabramenko/selenium-test-environment -f docker/Dockerfile .
+6. docker run -e HUB_HOST=172.17.0.1 -e BROWSER=chrome -e HEADLESS=false -e VIDEO=true aabramenko/selenium-test-environment
+
+where HUB_HOST is IP address of the selenoid hub
+
+Reports will be stored into the "/selenium-framework-skeleton/test-result" folder
+
+
+Reports
+
+1. Allure report is available in the "/selenium-framework-skeleton/test-result/allure-results/" folder
+2. ReportNG report is available in the "/selenium-framework-skeleton/test-result/surefire-reports/html/" folder

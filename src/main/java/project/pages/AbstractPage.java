@@ -24,12 +24,7 @@ public abstract class AbstractPage {
     private final Logger log = Logger.getLogger(this.getClass());
 
     public WebDriver getDriver() {
-        try {
-            return driver;
-        }
-        catch (WebDriverException e) {
-            return driver;
-        }
+        return driver;
     }
 
     public AbstractPage(final WebDriver driver) {

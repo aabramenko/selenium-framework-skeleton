@@ -20,4 +20,10 @@ public class Dictionary {
 
     public static final String EURO = "euro";
 
+    public static final String REGRESSION = "regression";
+
+    public static final String UI = "ui";
+
+    public static final String DB = "db";
+
 }

@@ -1,12 +1,11 @@
-package project.pages.example;
+package project.pages.google;
 
 import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.FindBy;
-import project.core.ConfigManager;
-import project.locators.example.GoogleResultsPageLocators;
-import project.locators.example.GoogleStartPageLocators;
+import project.core.TestRunParams;
+import project.locators.GoogleStartPageLocators;
 import project.pages.AbstractPage;
 import ru.yandex.qatools.htmlelements.element.Button;
 import ru.yandex.qatools.htmlelements.element.TextInput;
@@ -17,7 +16,7 @@ public class GoogleSearchPage extends AbstractPage {
 
     public GoogleSearchPage(final WebDriver driver) {
         super(driver);
-        waitForPageToLoadAndVerifyBy(By.xpath(GoogleStartPageLocators.GOOGLE_SEARCH_BUTON), ConfigManager.getWaitForPageUploadSec());
+        waitForPageToLoadAndVerifyBy(By.xpath(GoogleStartPageLocators.GOOGLE_SEARCH_BUTON), TestRunParams.getWaitForPageUploadSec());
         waitUntilPageScriptsReady();
     }
 
@@ -42,18 +41,13 @@ public class GoogleSearchPage extends AbstractPage {
         log.info("search: " + text);
         searchLine.sendKeys(text);
         searchLine.submit();
-        waitUntilDisplayed(By.xpath(GoogleResultsPageLocators.FIRST_RESULT), 5);
-        return new GoogleResultsPage(getDriver());
+        GoogleResultsPage resultsPage = new GoogleResultsPage(getDriver());
+        resultsPage = resultsPage.waitUntilResultsDisplayed(15);
+        return resultsPage;
     }
 
     public boolean isSignInButtonDisplayed() {
         return isElementPresent(signInButton, 1);
-    }
-
-    public GoogleSignInEmailPage clickSignInButton() {
-        log.info("click Sign In button");
-        signInButton.click();
-        return new GoogleSignInEmailPage(getDriver());
     }
 
 }

@@ -1,20 +1,18 @@
 package project.driverFactory;
 
 import org.openqa.selenium.chrome.ChromeOptions;
-import org.openqa.selenium.firefox.FirefoxBinary;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.firefox.FirefoxProfile;
 import org.openqa.selenium.logging.LogType;
 import org.openqa.selenium.logging.LoggingPreferences;
-import project.core.ConfigManager;
+import project.core.TestRunParams;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
 
 import static project.core.TestRunParams.getPathToDownloads;
-import static project.core.ConfigManager.isSelenoid;
 
 class DriverOptionsManager {
 
@@ -22,24 +20,18 @@ class DriverOptionsManager {
         LoggingPreferences logs = new LoggingPreferences();
         logs.enable(LogType.BROWSER, Level.SEVERE);
 
-        FirefoxBinary firefoxBinary = new FirefoxBinary();
-
-        if (ConfigManager.isHeadless()) {
-            firefoxBinary.addCommandLineOptions("--headless");
-        }
-
         System.setProperty(FirefoxDriver.SystemProperty.BROWSER_LOGFILE, "/dev/null");
 
         FirefoxOptions firefoxOptions = new FirefoxOptions();
 
-        firefoxOptions.setBinary(firefoxBinary);
+        if (TestRunParams.isHeadless()) {
+            firefoxOptions.setHeadless(true);
+        }
+
         firefoxOptions.addPreference("dom.disable_beforeunload", true);
         firefoxOptions.addPreference("browser.download.folderList", 2);
         firefoxOptions.addPreference("browser.download.manager.showWhenStarting", false);
-
-        if (!isSelenoid()) {
-            firefoxOptions.addPreference("browser.download.dir", getPathToDownloads());
-        }
+        firefoxOptions.addPreference("browser.download.dir", getPathToDownloads());
 
         firefoxOptions.addPreference("browser.helperApps.neverAsk.saveToDisk",
                 "text/plain, image/png, application/zlib, application/x-gzip, application/x-compressed, text/csv, " +
@@ -57,7 +49,7 @@ class DriverOptionsManager {
         firefoxOptions.setCapability(FirefoxDriver.PROFILE, profile);
         firefoxOptions.setCapability("browserName", "firefox");
         firefoxOptions.setCapability("enableVNC", true);
-        firefoxOptions.setCapability("enableVideo", false);
+        firefoxOptions.setCapability("enableVideo", TestRunParams.isVideo());
 
         return firefoxOptions;
     }
@@ -65,20 +57,16 @@ class DriverOptionsManager {
     ChromeOptions getChromeOptions() {
         ChromeOptions options = new ChromeOptions();
 
-        if (ConfigManager.isHeadless()) {
+        if (TestRunParams.isHeadless()) {
             options.addArguments("headless");
         }
 
         Map<String, Object> prefs = new HashMap<String, Object>();
-
-        if (!isSelenoid()) {
-            prefs.put("download.default_directory", getPathToDownloads());
-        }
-
+        prefs.put("download.default_directory", getPathToDownloads());
         prefs.put("download.prompt_for_download", false);
         options.setExperimentalOption("prefs", prefs);
         options.setCapability("enableVNC", true);
-        options.setCapability("enableVideo", false);
+        options.setCapability("enableVideo", TestRunParams.isVideo());
 
         return options;
     }

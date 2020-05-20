@@ -1,4 +1,4 @@
-package project.locators.example;
+package project.locators;
 
 public class GoogleStartPageLocators {
 

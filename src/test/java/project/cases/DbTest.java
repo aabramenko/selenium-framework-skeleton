@@ -5,24 +5,27 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import project.core.DbManager;
+import project.core.Dictionary;
 import project.data.SqlQueries;
 import project.models.Db;
 import ru.yandex.qatools.htmlelements.annotations.Name;
 
 @Name("DB test")
-@Test(groups = {"regression", "db"})
+@Test(groups = {Dictionary.REGRESSION, Dictionary.DB})
 public class DbTest extends AbstractTest {
 
     Db db;
 
+    @Override
     @BeforeClass(alwaysRun = true)
-    void setup() {
+    protected void beforeClass() {
         db = DbManager.getNewDbInstance();
         db.connect();
     }
 
+    @Override
     @AfterClass(alwaysRun = true)
-    void tearDown() {
+    protected void afterClass() {
         db.close();
     }
 
