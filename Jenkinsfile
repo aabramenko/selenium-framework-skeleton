@@ -14,6 +14,9 @@ pipeline {
         }
         stage('Build Image') {
             steps {
+                dir("docker") {
+                    sh "pwd"
+                }
                 script {
                 	app = docker.build("alekseiabramenko/selenium-test-environment")
                 }
