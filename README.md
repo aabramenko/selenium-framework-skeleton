@@ -47,3 +47,8 @@ Reports
 
 1. Allure report is available in the "/selenium-framework-skeleton/test-result/allure-results/" folder
 2. ReportNG report is available in the "/selenium-framework-skeleton/test-result/surefire-reports/html/" folder
+
+
+How to run Jenkins locally
+
+docker run -p 8080:8080 -p 50000:50000 -v "$PWD:/var/jenkins_home" jenkins/jenkins:lts
