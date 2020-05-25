@@ -15,12 +15,7 @@ pipeline {
         stage('Build Image') {
             agent any
             steps {
-                sh 'echo $PWD'
-                sh 'echo $PWD'
-                sh 'echo $PWD'
-                dir("../docker") {
-                    sh "pwd"
-                }
+                sh 'cd docker'
                 script {
                 	app = docker.build("alekseiabramenko/selenium-test-environment")
                 }
