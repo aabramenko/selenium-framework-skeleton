@@ -12,7 +12,6 @@ pipeline {
                 sh 'mvn clean package -DskipTests'
             }
         }
-    stages {
         stage('Build Image') {
             steps {
                 dir('../docker') {
