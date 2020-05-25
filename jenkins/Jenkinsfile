@@ -15,6 +15,9 @@ pipeline {
         stage('Build Image') {
             agent any
             steps {
+                sh 'echo &&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&'
+                sh 'echo $PWD'
+                sh 'echo &&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&'
                 dir("../docker") {
                     sh "pwd"
                 }
