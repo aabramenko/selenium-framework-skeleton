@@ -13,6 +13,7 @@ pipeline {
             }
         }
         stage('Build Image') {
+            agent any
             steps {
                 dir("docker") {
                     sh "pwd"
