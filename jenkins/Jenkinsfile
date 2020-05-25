@@ -15,9 +15,8 @@ pipeline {
         stage('Build Image') {
             agent any
             steps {
-                sh 'cd docker'
                 script {
-                	app = docker.build("alekseiabramenko/selenium-test-environment")
+                	app = docker.build("alekseiabramenko/selenium-test-environment", "-f docker/Dockerfile .")
                 }
             }
         }
