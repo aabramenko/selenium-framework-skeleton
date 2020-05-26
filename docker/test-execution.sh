@@ -6,4 +6,9 @@ do
 	sleep 1
 done
 
-mvn test -DSUITE=test-suite.xml -DBROWSER=$BROWSER -DGRID=true -DHUB_HOST=$HUB_HOST -DHEADLESS=$HEADLESS -DVIDEO=$VIDEO
+mvn test -DSUITE=$SUITE \
+        -DBROWSER=$BROWSER \
+        -DGRID=true \
+        -DHUB_HOST=$HUB_HOST \
+        -DHEADLESS=$HEADLESS \
+        -DVIDEO=$VIDEO
