@@ -12,9 +12,13 @@ How to launch using Selenium/Hub and Selenium/Node:
 
 1. Install docker
 2. Install docker-compose
-3. BROWSER=firefox HEADLESS=true docker-compose -f docker/basic.docker-compose.yaml up --scale firefox=6 --scale chrome=0
+3. BROWSER=firefox HEADLESS=true docker-compose -f docker/basic.docker-compose.yaml up \
+        --scale firefox=6 --scale chrome=0
+        
    or
-   BROWSER=chrome HEADLESS=true docker-compose -f docker/basic.docker-compose.yaml up --scale chrome=6 --scale firefox=0
+   
+   BROWSER=chrome HEADLESS=true docker-compose -f docker/basic.docker-compose.yaml up \
+        --scale chrome=6 --scale firefox=0
 
 Reports will be stored into the "test-results" folder
 
@@ -37,7 +41,10 @@ How to launch using Selenoid
 3. docker pull selenoid/video-recorder:latest-release // if you would like to record video
 4. docker-compose -f docker/selenoid.docker-compose.yaml up -d
 5. docker build -t aabramenko/selenium-test-environment -f docker/Dockerfile .
-6. docker run -e HUB_HOST=172.17.0.1 -e BROWSER=chrome -e HEADLESS=false -e VIDEO=true aabramenko/selenium-test-environment
+6. docker run -e HUB_HOST=172.17.0.1 -e \
+            BROWSER=chrome -e HEADLESS=false -e VIDEO=true \
+            -v $PWD/test-results:/usr/share/selenium-tests/target \
+            aabramenko/selenium-test-environment
 
 where HUB_HOST is IP address of the selenoid hub
 
@@ -52,4 +59,6 @@ Reports
 
 How to run Jenkins locally
 
-docker run -p 8080:8080 -p 50000:50000 -v "$PWD:/var/jenkins_home" jenkins/jenkins:lts
+docker run -p 8888:8080 -p 50000:50000 -v "$PWD:/var/jenkins_home" jenkins/jenkins:lts
+
+// the port is "8888" because the port "8080" may be used by the Selenoid hub
