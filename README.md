@@ -2,9 +2,10 @@ How to launch without dockerizing:
 
 1. Install openjdk (tested with openjdk8 and openjdk11)
 2. Install Maven
-3. mvn test -DSUITE=test-suite.xml -DHEADLESS=false -DBROWSER=chrome -DGRID=false
+3. Install Google Chrome / Firefox
+4. mvn test -DSUITE=test-suite.xml -DHEADLESS=false -DBROWSER=chrome -DGRID=false
 
-Reports will be stored into the "/selenium-framework-skeleton/target" folder
+Reports will be stored into the "target" folder
 
 
 How to launch using Selenium/Hub and Selenium/Node:
@@ -15,7 +16,7 @@ How to launch using Selenium/Hub and Selenium/Node:
    or
    BROWSER=chrome HEADLESS=true docker-compose -f docker/basic.docker-compose.yaml up --scale chrome=6 --scale firefox=0
 
-Reports will be stored into the "/selenium-framework-skeleton/test-result" folder
+Reports will be stored into the "test-results" folder
 
 
 How to launch using Zalenium
@@ -40,13 +41,13 @@ How to launch using Selenoid
 
 where HUB_HOST is IP address of the selenoid hub
 
-Reports will be stored into the "/selenium-framework-skeleton/test-result" folder
+Reports will be stored into the "test-results" folder
 
 
 Reports
 
-1. Allure report is available in the "/selenium-framework-skeleton/test-result/allure-results/" folder
-2. ReportNG report is available in the "/selenium-framework-skeleton/test-result/surefire-reports/html/" folder
+1. Allure report is available in the "test-results/allure-results/" folder
+2. ReportNG report is available in the "/test-results/surefire-reports/html/" folder
 
 
 How to run Jenkins locally

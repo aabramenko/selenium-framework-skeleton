@@ -1,19 +1,7 @@
 pipeline {
     agent none
     stages {
-        stage('Build Jar') {
-            agent {
-                docker {
-                    image 'maven:3-alpine'
-                    args '-v /home/aabramenko/.m2:/root/.m2'
-                }
-            }
-            steps {
-                sh 'mvn clean package -DskipTests'
-            }
-        }
         stage('Build Image') {
-            agent any
             steps {
                 script {
                 	app = docker.build("alekseiabramenko/selenium-test-environment", "-f docker/Dockerfile .")
