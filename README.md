@@ -12,12 +12,12 @@ How to launch using Selenium/Hub and Selenium/Node:
 
 1. Install docker
 2. Install docker-compose
-3. BROWSER=firefox HEADLESS=true docker-compose -f docker/basic.docker-compose.yaml up \
+3. BROWSER=firefox HEADLESS=true docker-compose -f docker/hub.docker-compose.yaml up \
         --scale firefox=6 --scale chrome=0
         
    or
    
-   BROWSER=chrome HEADLESS=true docker-compose -f docker/basic.docker-compose.yaml up \
+   BROWSER=chrome HEADLESS=true docker-compose -f docker/hub.docker-compose.yaml up \
         --scale chrome=6 --scale firefox=0
 
 Reports will be stored into the "test-results" folder
