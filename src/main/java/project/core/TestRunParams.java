@@ -96,6 +96,9 @@ public class TestRunParams {
     }
 
     public static boolean isHeadless() {
+
+        log.info("~~~~~ HEADLESS = " + System.getProperty("HEADLESS") );
+
         if (System.getProperty("HEADLESS") != null) {
             return Boolean.parseBoolean(System.getProperty("HEADLESS"));
         }
