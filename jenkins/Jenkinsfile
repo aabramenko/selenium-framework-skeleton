@@ -2,6 +2,7 @@ pipeline {
     agent none
     stages {
         stage('Pull code') {
+            agent none
             steps {
                 git 'https://github.com/aabramenko/selenium-framework-skeleton.git'
             }
