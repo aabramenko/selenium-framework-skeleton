@@ -18,10 +18,10 @@ pipeline {
                 }
             }
         }
-    	stage('Clean workspace') {
-    		steps {
-    			cleanWs()
-    		}
-    	}
     }
+	post {
+		always {
+            cleanWs()
+		}
+	}
 }
