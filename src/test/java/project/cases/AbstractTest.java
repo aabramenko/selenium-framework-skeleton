@@ -14,7 +14,7 @@ import static project.core.TestRunParams.*;
 
 public abstract class AbstractTest {
 
-    private Logger log = Logger.getLogger("");
+    private final Logger log = Logger.getLogger("");
     protected SoftAssertions softAssertj;
     protected SoftAssert softAssert;
     private WebDriver driver;
