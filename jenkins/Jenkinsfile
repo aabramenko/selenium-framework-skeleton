@@ -1,13 +1,13 @@
 pipeline {
-    agent none
     stages {
         stage('Pull code') {
-            agent none
+            agent any
             steps {
                 git 'https://github.com/aabramenko/selenium-framework-skeleton.git'
             }
         }
         stage('Build Image') {
+            agent none
             steps {
                 script {
                 	app = docker.build("alekseiabramenko/selenium-test-environment", "-f docker/Dockerfile .")
@@ -15,6 +15,7 @@ pipeline {
             }
         }
         stage('Push Image') {
+            agent none
             steps {
                 script {
 			        docker.withRegistry('https://registry.hub.docker.com', 'dockerhub') {
