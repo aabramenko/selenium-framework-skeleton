@@ -1,10 +1,9 @@
 pipeline {
     agent none
     stages {
-    	stage("Pull code") {
+    	stage("Clean workspace) {
     		steps {
-    			git checkout master
-    			git pull
+    			cleanWs()
     		}
     	}
         stage('Build Image') {
