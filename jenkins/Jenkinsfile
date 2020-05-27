@@ -1,12 +1,12 @@
 pipeline {
     agent none
-	stage("Pull code") {
-		steps {
-			git checkout master
-			git pull
-		}
-	}
     stages {
+    	stage("Pull code") {
+    		steps {
+    			git checkout master
+    			git pull
+    		}
+    	}
         stage('Build Image') {
             steps {
                 script {
