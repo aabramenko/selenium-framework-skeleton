@@ -7,10 +7,7 @@ import org.openqa.selenium.WebDriver;
 import org.testng.ITestResult;
 import org.testng.annotations.*;
 import org.testng.asserts.SoftAssert;
-import project.core.CredentialsManager;
-import project.core.RunTimeDataStorage;
-import project.core.TestRunParams;
-import project.core.Utils;
+import project.core.*;
 import project.driverFactory.DriverFactory;
 
 import static project.core.TestRunParams.*;
@@ -42,6 +39,7 @@ public abstract class AbstractTest {
         log.info("=== Grid?: " + TestRunParams.isGrid());
         log.info("=== Hub Host: " + TestRunParams.getHubHost());
         log.info("=== Headless?: " + TestRunParams.isHeadless());
+        log.info("=== Version: " + Constants.VERSION);
     }
 
     @AfterSuite(alwaysRun = true)
