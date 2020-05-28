@@ -1,7 +1,7 @@
 pipeline {
     agent none
     node ('DOCKER') {
-         stage('Pull code'') {
+         stage('Pull code') {
              git 'https://github.com/aabramenko/selenium-framework-skeleton.git'
           }
     }
