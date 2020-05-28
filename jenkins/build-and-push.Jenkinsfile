@@ -1,11 +1,10 @@
 pipeline {
-    agent none
+    node {
+         stage('Pull code') {
+             git 'https://github.com/aabramenko/selenium-framework-skeleton.git'
+          }
+    }
     stages {
-        node ('DOCKER') {
-             stage('Pull code') {
-                 git 'https://github.com/aabramenko/selenium-framework-skeleton.git'
-              }
-        }
         stage('Build Image') {
             steps {
                 script {
