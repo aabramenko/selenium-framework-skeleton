@@ -39,6 +39,7 @@ public abstract class AbstractTest {
         log.info("=== Grid?: " + TestRunParams.isGrid());
         log.info("=== Hub Host: " + TestRunParams.getHubHost());
         log.info("=== Headless?: " + TestRunParams.isHeadless());
+        log.info("=== Video?: " + TestRunParams.isVideo());
         log.info("=== Version: " + Constants.VERSION);
     }
 
