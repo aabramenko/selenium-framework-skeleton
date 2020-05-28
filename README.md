@@ -31,7 +31,7 @@ How to launch using Zalenium
    or
    BROWSER=firefox HEADLESS=true docker-compose -f docker/zalenium.docker-compose.yaml up
 
-The realization is in progress yet, but looks like this approach does not have any advantages, so don't spend much time for that.  
+(!) The realization is in progress yet, but looks like this approach does not have any advantages, so don't spend much time for that.  
 
 
 How to launch using Selenoid
