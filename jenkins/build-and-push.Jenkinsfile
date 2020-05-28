@@ -14,7 +14,7 @@ pipeline {
     stage('Building image') {
       steps{
         script {
-          dockerImage = docker.build registry "-f docker/Dockerfile ."
+          dockerImage = docker.build(registry, "-f docker/Dockerfile .")
         }
       }
     }
