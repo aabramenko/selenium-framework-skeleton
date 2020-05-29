@@ -22,7 +22,7 @@ public class ValidateCurrencyRateTest extends BaseTest {
     GoogleSearchPage searchPage;
     GoogleResultsPage resultsPage;
     Document officialRates;
-    int expected_delta_percent = 2;
+    int expected_delta_percent = 1;
     private final Logger log = Logger.getLogger(this.getClass());
 
     @BeforeClass
