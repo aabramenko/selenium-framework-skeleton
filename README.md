@@ -41,8 +41,11 @@ Reports will be stored into the "test-results" folder
 3. docker pull selenoid/video-recorder:latest-release // if you would like to record video
 4. docker-compose -f docker/selenoid.docker-compose.yaml up -d
 5. docker build -t aabramenko/selenium-test-environment -f docker/Dockerfile .
-6. docker run -e HUB_HOST=172.17.0.1 -e \
-            BROWSER=chrome -e HEADLESS=false -e VIDEO=true \
+6. docker run -e HUB_HOST=172.17.0.1 \
+            -e BROWSER=chrome \
+            -e HEADLESS=false \
+            -e VIDEO=true \
+            -e SUITE=test-suite.xml \
             -v $PWD/test-results:/usr/share/selenium-tests/target \
             aabramenko/selenium-test-environment
 
@@ -53,8 +56,8 @@ Reports will be stored into the "test-results" folder
 
 ## Reports
 
-1. Allure report is available in the "test-results/allure-results/" folder
-2. ReportNG report is available in the "/test-results/surefire-reports/html/" folder
+1. Allure report is available in an appropriate folder
+2. ReportNG report is available in an appropriate folder
 
 
 ## How to run Jenkins locally
