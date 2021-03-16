@@ -1,10 +1,5 @@
 version: "3"
 services:
-  build-image:
-    build:
-      context: ../
-      dockerfile: docker/Dockerfile
-    image: aabramenko/selenium-test-environment
   hub:
     image: selenium/hub:3.14
     ports:
@@ -28,10 +23,10 @@ services:
     depends_on:
       - firefox
       - chrome
-      - build-image
     environment:
       - HUB_HOST=hub
       - BROWSER=${BROWSER}
       - HEADLESS=${HEADLESS}
+      - SUITE=${SUITE}
     volumes:
     - ../test-results:/usr/share/selenium-tests/target

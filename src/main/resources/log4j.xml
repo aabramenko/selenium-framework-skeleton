@@ -2,7 +2,7 @@
 <!DOCTYPE log4j:configuration SYSTEM "http://logging.apache.org/log4j/1.2/apidocs/org/apache/log4j/xml/doc-files/log4j.dtd">
 
 <log4j:configuration>
-    <appender name="testNgReporter" class="project.logger.TestNgReportAppender">
+    <appender name="testNgReporter" class="com.logger.TestNgReportAppender">
         <layout class="org.apache.log4j.PatternLayout">
             <param name="ConversionPattern" value="%d{yyyy-MM-dd HH:mm:ss,SSS} %-5p #THREAD#: %m%n"/>
         </layout>
@@ -12,7 +12,7 @@
             <param name="AcceptOnMatch" value="true"/>
         </filter>
     </appender>
-    <appender name="console" class="project.logger.ConsoleAppender">
+    <appender name="console" class="com.logger.ConsoleAppender">
         <layout class="org.apache.log4j.PatternLayout">
             <param name="ConversionPattern" value="%-5p#THREAD#: %m%n"/>
         </layout>
@@ -22,7 +22,7 @@
             <param name="AcceptOnMatch" value="true"/>
         </filter>
     </appender>
-    <appender name="file_full" class="project.logger.FileAppender">
+    <appender name="file_full" class="com.logger.FileAppender">
         <param name="File" value="target/test-run-artifacts/full.log"/>
         <param name="DatePattern" value="'.'yyyy-MM-dd'.log'"/>
         <layout class="org.apache.log4j.PatternLayout">
@@ -35,7 +35,7 @@
             <param name="AcceptOnMatch" value="true"/>
         </filter>
     </appender>
-    <appender name="file_error" class="project.logger.FileAppender">
+    <appender name="file_error" class="com.logger.FileAppender">
         <param name="File" value="target/test-run-artifacts/error.log"/>
         <param name="DatePattern" value="'.'yyyy-MM-dd'.log'"/>
         <layout class="org.apache.log4j.PatternLayout">

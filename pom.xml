@@ -21,9 +21,7 @@
         <aspectj.version>1.9.1</aspectj.version>
         <webdrivermanager.version>3.6.1</webdrivermanager.version>
         <maven-surefire-plugin.version>3.0.0-M4</maven-surefire-plugin.version>
-        <allure.version>2.10.0</allure.version>
-        <!--Default values-->
-        <SUITE>test-suite.xml</SUITE>
+        <allure.version>2.13.3</allure.version>
     </properties>
 
     <build>
@@ -34,7 +32,7 @@
                 <version>${maven-surefire-plugin.version}</version>
                 <configuration>
                     <suiteXmlFiles>
-                        <suiteXmlFile>${project.basedir}/src/test/java/project/suites/${SUITE}</suiteXmlFile>
+                        <suiteXmlFile>${project.basedir}/src/test/java/com/example/suites/${SUITE}</suiteXmlFile>
                     </suiteXmlFiles>
                     <useSystemClassLoader>false</useSystemClassLoader>
                     <argLine>
@@ -49,7 +47,7 @@
                             <name>listener</name>
                             <value>org.uncommons.reportng.HTMLReporter,
                                 org.uncommons.reportng.JUnitXMLReporter,
-                                project.logger.TestListener</value>
+                                com.logger.TestListener</value>
                         </property>
                     </properties>
                 </configuration>
@@ -73,7 +71,7 @@
             <plugin>
                 <groupId>io.qameta.allure</groupId>
                 <artifactId>allure-maven</artifactId>
-                <version>${allure.version}</version>
+                <version>2.10.0</version>
             </plugin>
         </plugins>
     </build>
@@ -172,6 +170,16 @@
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-simple</artifactId>
             <version>1.7.25</version>
+        </dependency>
+        <dependency>
+            <groupId>org.hamcrest</groupId>
+            <artifactId>java-hamcrest</artifactId>
+            <version>2.0.0.0</version>
+        </dependency>
+        <dependency>
+            <groupId>com.github.javafaker</groupId>
+            <artifactId>javafaker</artifactId>
+            <version>1.0.2</version>
         </dependency>
     </dependencies>
 </project>

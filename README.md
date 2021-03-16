@@ -1,4 +1,4 @@
-## How to launch without dockerizing:
+## How to launch without docker:
 
 1. Install openjdk (tested with openjdk8 and openjdk11)
 2. Install Maven
@@ -12,13 +12,14 @@ Reports will be stored into the "target" folder
 
 1. Install docker
 2. Install docker-compose
-3. BROWSER=firefox HEADLESS=true docker-compose -f docker/hub.docker-compose.yaml up \
-        --scale firefox=6 --scale chrome=0
+3. docker build -t aabramenko/selenium-test-environment -f docker/Dockerfile .
+4. BROWSER=firefox HEADLESS=true SUITE=test-suite.xml docker-compose -f docker/hub.docker-compose.yaml up \
+        --scale firefox=4 --scale chrome=0
         
    or
    
-   BROWSER=chrome HEADLESS=true docker-compose -f docker/hub.docker-compose.yaml up \
-        --scale chrome=6 --scale firefox=0
+   BROWSER=chrome HEADLESS=true SUITE=test-suite.xml docker-compose -f docker/hub.docker-compose.yaml up \
+        --scale chrome=4 --scale firefox=0
 
 Reports will be stored into the "test-results" folder
 
@@ -36,15 +37,18 @@ Reports will be stored into the "test-results" folder
 
 ## How to launch using Selenoid
 
-1. docker pull selenoid/firefox:76.0
-2. docker pull selenoid/chrome:83.0
+Note: if your docker requires 'sudo' please take a look at this article: https://docs.docker.com/engine/install/linux-postinstall/
+All next commands should be executed without 'sudo'.
+
+1. docker pull selenoid/firefox:86.0
+2. docker pull selenoid/chrome:89.0
 3. docker pull selenoid/video-recorder:latest-release // if you would like to record video
 4. docker-compose -f docker/selenoid.docker-compose.yaml up -d
 5. docker build -t aabramenko/selenium-test-environment -f docker/Dockerfile .
 6. docker run -e HUB_HOST=172.17.0.1 \
             -e BROWSER=chrome \
-            -e HEADLESS=false \
-            -e VIDEO=true \
+            -e HEADLESS=true \
+            -e VIDEO=false \
             -e SUITE=test-suite.xml \
             -v $PWD/test-results:/usr/share/selenium-tests/target \
             aabramenko/selenium-test-environment
@@ -56,8 +60,8 @@ Reports will be stored into the "test-results" folder
 
 ## Reports
 
-1. Allure report is available in an appropriate folder
-2. ReportNG report is available in an appropriate folder
+1. Allure report is available in the appropriate folder
+2. ReportNG report is available in the appropriate folder
 
 
 ## How to run Jenkins locally
