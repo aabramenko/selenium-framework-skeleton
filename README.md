@@ -69,7 +69,7 @@ https://github.com/aabramenko/selenium-framework-skeleton/actions/workflows/hub.
 https://github.com/aabramenko/selenium-framework-skeleton/actions/workflows/no-docker.yml
 
 ### using a custom docker
-
+https://github.com/aabramenko/selenium-framework-skeleton/actions/workflows/custom.yml
 
 
 ## Reports

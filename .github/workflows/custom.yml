@@ -13,4 +13,4 @@ jobs:
 
     - id: runTests
       name: Start container and tests
-      run: BROWSER=firefox HEADLESS=true SUITE=test-suite.xml docker-compose -f docker/custom.docker-compose.yaml up --exit-code-from tests-module
+      run: BROWSER=firefox HEADLESS=true SUITE=test-suite.xml docker-compose -f docker/custom.docker-compose.yml up --exit-code-from tests-module
