@@ -3,7 +3,7 @@ services:
   build-image:
     build:
       context: ../
-      dockerfile: docker/Dockerfile
+      dockerfile: docker/hub.Dockerfile
     image: aabramenko/selenium-test-environment
   hub:
     image: dosel/zalenium

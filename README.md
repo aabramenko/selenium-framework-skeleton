@@ -12,14 +12,8 @@ Reports will be stored into the "target" folder
 
 1. Install docker
 2. Install docker-compose
-3. docker build -t aabramenko/selenium-test-environment -f docker/Dockerfile .
-4. BROWSER=firefox HEADLESS=true SUITE=test-suite.xml docker-compose -f docker/hub.docker-compose.yaml up \
-        --scale firefox=4 --scale chrome=0
-        
-   or
-   
-   BROWSER=chrome HEADLESS=true SUITE=test-suite.xml docker-compose -f docker/hub.docker-compose.yaml up \
-        --scale chrome=4 --scale firefox=0
+3. BROWSER=chrome HEADLESS=true SUITE=test-suite.xml docker-compose -f docker/hub.docker-compose.yaml up \
+        --build --scale chrome=4
 
 Reports will be stored into the "test-results" folder
 

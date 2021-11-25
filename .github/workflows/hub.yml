@@ -1,0 +1,14 @@
+name: Selenium Framework Skeleton Tests using Hub
+
+on:
+  workflow_dispatch:
+
+jobs:
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v1
+
+    - id: runTests
+      name: Start container and tests
+      run: BROWSER=chrome HEADLESS=true SUITE=test-suite.xml docker-compose -f docker/hub.docker-compose.yaml up --build --scale chrome=4 --exit-code-from test-environment

@@ -11,17 +11,11 @@ services:
       - hub
     environment:
       - HUB_HOST=hub
-  firefox:
-    image: selenium/node-firefox:3.14
-    shm_size: '512mb'
-    depends_on:
-      - hub
-    environment:
-      - HUB_HOST=hub
   test-environment:
-    image: aabramenko/selenium-test-environment
+    build:
+      context: ../
+      dockerfile: docker/hub.Dockerfile
     depends_on:
-      - firefox
       - chrome
     environment:
       - HUB_HOST=hub
