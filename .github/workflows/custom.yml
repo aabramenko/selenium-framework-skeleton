@@ -1,0 +1,16 @@
+name: run inside one docker container
+
+on:
+  workflow_dispatch:
+
+jobs:
+  docker:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v1
+
+    - id: runTests
+      name: Start container and tests
+      run: BROWSER=firefox HEADLESS=true SUITE=test-suite.xml docker-compose -f docker/custom.docker-compose.yaml up --exit-code-from tests-module

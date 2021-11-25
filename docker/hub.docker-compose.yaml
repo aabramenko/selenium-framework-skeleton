@@ -23,4 +23,4 @@ services:
       - HEADLESS=${HEADLESS}
       - SUITE=${SUITE}
     volumes:
-    - ../test-results:/usr/share/selenium-tests/target
+    - ../reports/hub-docker:/usr/share/selenium-tests/target

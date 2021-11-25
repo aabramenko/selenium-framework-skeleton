@@ -1,4 +1,4 @@
-name: Selenium Framework Skeleton Tests using Hub
+name: run using Hub docker
 
 on:
   workflow_dispatch:

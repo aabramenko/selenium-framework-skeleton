@@ -7,6 +7,6 @@
 .idea
 target
 *.iml
-test-results
+reports
 docker/selenoid/logs
 docker/selenoid/video

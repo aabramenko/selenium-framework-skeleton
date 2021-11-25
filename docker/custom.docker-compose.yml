@@ -1,0 +1,14 @@
+version: "3.7"
+
+services: 
+  tests-module:
+      build: 
+          context: ../
+          dockerfile: docker/custom.Dockerfile
+      shm_size: '2gb'
+      volumes: 
+        - ../reports/custom-docker:/selenium-tests/target
+      environment:
+        - SUITE=${SUITE}
+        - BROWSER=${BROWSER}
+        - HEADLESS=${HEADLESS}

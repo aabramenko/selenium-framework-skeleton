@@ -1,4 +1,4 @@
-name: Selenium Framework Skeleton Tests without docker
+name: run without docker
 
 on:
   workflow_dispatch:

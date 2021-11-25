@@ -8,4 +8,4 @@ WORKDIR $TESTS_DIR
 ADD . $TESTS_DIR
 RUN cd $TESTS_DIR && mvn install -DskipTests
 
-ENTRYPOINT sh docker/test-execution.sh
+ENTRYPOINT sh docker/hub-test-execution.sh

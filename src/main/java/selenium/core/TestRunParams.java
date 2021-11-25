@@ -21,7 +21,7 @@ public class TestRunParams {
     }
 
     public static void uploadDefaultRunParameters() {
-        log.info("uploading of default run parameters");
+        log.info("uploading default run parameters");
         String configFileName = "default_run_parameters";
         runParameters = ConfigFactory.load(configFileName);
     }
