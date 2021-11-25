@@ -4,6 +4,8 @@ on:
   workflow_dispatch:
 
 jobs:
+  docker:
+    runs-on: openjdk:8-jdk-alpine
 
     steps:
     - name: Checkout
