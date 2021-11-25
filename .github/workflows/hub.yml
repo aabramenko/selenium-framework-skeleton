@@ -5,7 +5,7 @@ on:
 
 jobs:
   docker:
-    runs-on: openjdk:8-jdk-alpine
+    runs-on: ubuntu-latest
 
     steps:
     - name: Checkout
