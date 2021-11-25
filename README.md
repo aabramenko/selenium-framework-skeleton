@@ -1,4 +1,4 @@
-## How to launch without docker:
+## How to run tests without docker:
 
 1. Install openjdk (tested with openjdk8 and openjdk11)
 2. Install Maven
@@ -8,7 +8,7 @@
 Reports will be stored into the "target" folder
 
 
-## How to launch using Selenium/Hub and Selenium/Node:
+## How to run tests using Selenium/Hub and Selenium/Node:
 
 1. Install docker
 2. Install docker-compose
@@ -18,7 +18,7 @@ Reports will be stored into the "target" folder
 Reports will be stored into the "test-results" folder
 
 
-## How to launch using Zalenium
+## How to run tests using Zalenium
 
 1. docker pull elgalu/selenium
 2. docker pull dosel/zalenium
@@ -29,7 +29,7 @@ Reports will be stored into the "test-results" folder
 (!) The realization is in progress yet, but looks like this approach does not have any advantages, so don't spend much time for that.  
 
 
-## How to launch using Selenoid
+## How to run tests using Selenoid
 
 Note: if your docker requires 'sudo' please take a look at this article: https://docs.docker.com/engine/install/linux-postinstall/
 All next commands should be executed without 'sudo'.
